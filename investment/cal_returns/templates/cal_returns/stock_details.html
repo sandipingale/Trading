@@ -1,0 +1,59 @@
+{% extends "cal_returns/base.html" %}
+{% block title %}Stock Details{% endblock %}
+{% block body %}
+<form action="stock_details" method="post">
+    {% csrf_token %}
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="symbol_name">Symbol</label>
+            {{ form.symbol_name }}
+        </div>
+        <div class="form-group">
+            <label for="series">Series</label>
+            {{ form.series }}
+        </div>
+        <div class="form-group">
+            <label for="start_date">Start Date</label>
+            {{ form.start_date }}
+        </div>
+        <div class="form-group">
+            <label for="end_date">End Date</label>
+            {{ form.end_date }}
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+        <br><br>
+        {% if data %}
+        <table class="table table-striped table-bordered" style="width:100%" id="example">
+            <thead>
+                <tr>
+                    <th>Sybol</th>
+                    <th>Series</th>
+                    <th>Date</th>
+                    <th>Close Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock,series,date,price in data %}
+                <tr>
+                    <td>{{ stock }}</td>
+                    <td>{{ series }}</td>
+                    <td>{{ date|date:'Y-m-d' }}</td>
+                    {% if price == min %}
+                        <td bgcolor="green">{{ price }}</td>
+                    {% elif price == max %}
+                        <td bgcolor="red">{{ price }}</td>
+                    {% else %}
+                        <td>{{ price }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% endif %}
+
+    </div>
+</form>
+
+{% endblock %}
