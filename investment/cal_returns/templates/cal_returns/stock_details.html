@@ -3,25 +3,27 @@
 {% block body %}
 <form action="stock_details" method="post">
     {% csrf_token %}
-    <div class="form-inline">
-        <div class="form-group">
-            <label for="symbol_name">Symbol</label>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="id_symbol_name">Symbol</label>
             {{ form.symbol_name }}
         </div>
-        <div class="form-group">
-            <label for="series">Series</label>
+        <div class="form-group col-md-6">
+            <label for="id_series">Series</label>
             {{ form.series }}
         </div>
-        <div class="form-group">
-            <label for="start_date">Start Date</label>
-            {{ form.start_date }}
+        <div class="form-group col-md-6">
+            <label for="id_start_date">Start Date</label>
+            <input type="date" name="start_date" class="form-control" required="" id="id_start_date">
         </div>
-        <div class="form-group">
-            <label for="end_date">End Date</label>
-            {{ form.end_date }}
+        <div class="form-group col-md-6">
+            <label for="id_end_date">End Date</label>
+            <input type="date" name="end_date" class="form-control" required="" id="id_end_date">
         </div>
 
-        <button type="submit" class="btn btn-default">Submit</button>
+        <div><button type="button" class="btn btn-primary">Submit</button></div>
+</form>
         <br><br>
         {% if data %}
         <table class="table table-striped table-bordered" style="width:100%" id="example">
@@ -54,6 +56,6 @@
         {% endif %}
 
     </div>
-</form>
+
 
 {% endblock %}

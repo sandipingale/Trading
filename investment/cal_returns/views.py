@@ -2,19 +2,8 @@ from django.shortcuts import render
 import sys
 from datetime import date
 from .forms import StockForm, InvStockForm, SectReturnForm
-xxpath = "C:\\Users\\lenovo\\PycharmProjects\\Trading"
-sys.path.append(xxpath)
-from xirr import xirr
-from query_stocks import get_results, inv_test
+from .services.query_stocks import  new_inv_test,get_results
 
-
-def getxirr(request):
-    tas = [(date(2006, 1, 24), -39967),
-           (date(2008, 2, 6), -19866),
-           (date(2010, 10, 18), 245706),
-           (date(2013, 9, 14), 52142)]
-    print("IRR for test data = {:.2%}".format(xirr(tas)))
-    return render(request, 'cal_returns/xirr.html', {'xirr': "{:.2%}".format(xirr(tas))})
 
 
 def stock_details(request):
@@ -48,7 +37,7 @@ def inv_return_test(request):
             multiply = form.cleaned_data['multiply']
             moving_average = form.cleaned_data['moving_average']
 
-            data, xirr_value, inv_to_proceed, tot_inv, tot_ret = inv_test(symbol, series, start_date, end_date,
+            data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, series, start_date, end_date,
                                                                           no_of_shares, multiply, moving_average)
             abs_ret = (tot_ret - tot_inv)/tot_inv * 100
             return render(request, 'cal_returns/inv_return_test.html', {'form': form,
@@ -79,8 +68,7 @@ def sect_return(request):
             moving_average = form.cleaned_data['moving_average']
             symbols = []
             if sector == 'IT':
-                symbols = ['WIPRO', 'TCS', 'INFY', 'TECHM', 'NIITTECH', 'HCLTECH', 'TATAELXSI', 'MINDTREE', 'HEXAWARE',
-                       ]
+                symbols = ['WIPRO.NS', 'TCS.NS', 'INFY.NS', 'TECHM.NS', 'NIITLTD.NS', 'HCLTECH.NS', 'TATAELXSI.NS', 'MINDTREE.NS', ]
             if sector == 'Auto':
                 symbols = ['ASHOKLEY', 'HEROMOTOCO', 'M&M', 'APOLLOTYRE', 'MRF', 'BAJAJ-AUTO', 'MARUTI', 'EICHERMOT',
                            'MOTHERSUMI', 'TVSMOTOR', 'TATAMOTORS', 'BOSCHLTD', 'EXIDEIND', 'AMARAJABAT', 'BHARATFORG']
@@ -94,7 +82,7 @@ def sect_return(request):
                 symbols = ['NIFTYBEES']
             sect_ret_results = []
             for symbol in symbols:
-                data, xirr_value, inv_to_proceed, tot_inv, tot_ret = inv_test(symbol, series, start_date, end_date,
+                data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, series, start_date, end_date,
                                                                               no_of_shares, multiply, moving_average)
                 sect_ret_results.append((symbol, xirr_value, inv_to_proceed, data[-1][0], data[-1][1]))
             return render(request, 'cal_returns/sect_return.html', {'form': form,
