@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9de2e7b3-c582-440a-9d14-315e26c0ddfa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/check_yf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investment/cal_returns/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/investment/cal_returns/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/investment/cal_returns/templates/cal_returns/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/investment/cal_returns/templates/cal_returns/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/investment/cal_returns/templates/cal_returns/inv_return_test.html" beforeDir="false" afterPath="$PROJECT_DIR$/investment/cal_returns/templates/cal_returns/inv_return_test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/investment/cal_returns/templates/cal_returns/sect_return.html" beforeDir="false" afterPath="$PROJECT_DIR$/investment/cal_returns/templates/cal_returns/sect_return.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investment/cal_returns/templates/cal_returns/stock_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/investment/cal_returns/templates/cal_returns/stock_details.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/investment/cal_returns/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/investment/cal_returns/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investment/investment/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/investment/investment/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/load_stocks.py" beforeDir="false" afterPath="$PROJECT_DIR$/load_stocks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/query_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/query_db.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +77,21 @@
       <option name="project" value="LOCAL" />
       <updated>1628483793072</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Updates from yfinance">
+      <created>1628496447522</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1628496447522</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Updates from yfinance">
+      <created>1628496579245</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1628496579245</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -94,21 +103,25 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="525" y="216" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1628428979515" />
-    <state x="307" y="8" key="CommitChangelistDialog2" timestamp="1628483789855">
+    <state x="307" y="8" key="CommitChangelistDialog2" timestamp="1628496574731">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="307" y="8" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1628483789855" />
+    <state x="307" y="8" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1628496574731" />
     <state x="277" y="56" key="SettingsEditor" timestamp="1628424659489">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="56" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1628424659489" />
-    <state x="361" y="146" key="Vcs.Push.Dialog.v2" timestamp="1628483805042">
+    <state x="361" y="146" key="Vcs.Push.Dialog.v2" timestamp="1628496583430">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="146" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1628483805042" />
+    <state x="361" y="146" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1628496583430" />
     <state x="465" y="238" key="com.intellij.ide.util.TipDialog" timestamp="1628483752032">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="465" y="238" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1628483752032" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1628522489472">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1628522489472" />
   </component>
 </project>
