@@ -11,11 +11,11 @@ def stock_details(request):
         form = StockForm(request.POST)
         if form.is_valid():
             symbol = form.cleaned_data['symbol_name']
-            series = form.cleaned_data['series']
+#            series = form.cleaned_data['series']
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
 
-            data, min_val, max_val = get_results(symbol, series, start_date, end_date)
+            data, min_val, max_val = get_results(symbol, 'EQ', start_date, end_date)
             return render(request, 'cal_returns/stock_details.html', {'form': form,
                                                                       'data': data,
                                                                       'min': min_val,
@@ -30,14 +30,14 @@ def inv_return_test(request):
         form = InvStockForm(request.POST)
         if form.is_valid():
             symbol = form.cleaned_data['symbol_name']
-            series = form.cleaned_data['series']
+#            series = form.cleaned_data['series']
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
             no_of_shares = form.cleaned_data['no_of_shares']
             multiply = form.cleaned_data['multiply']
             moving_average = form.cleaned_data['moving_average']
 
-            data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, series, start_date, end_date,
+            data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, 'EQ', start_date, end_date,
                                                                           no_of_shares, multiply, moving_average)
             abs_ret = (tot_ret - tot_inv)/tot_inv * 100
             return render(request, 'cal_returns/inv_return_test.html', {'form': form,
@@ -60,7 +60,7 @@ def sect_return(request):
         form = SectReturnForm(request.POST)
         if form.is_valid():
             sector = form.cleaned_data['sector']
-            series = form.cleaned_data['series']
+#            series = form.cleaned_data['series']
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
             no_of_shares = form.cleaned_data['no_of_shares']
@@ -82,7 +82,7 @@ def sect_return(request):
                 symbols = ['NIFTYBEES']
             sect_ret_results = []
             for symbol in symbols:
-                data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, series, start_date, end_date,
+                data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, 'EQ', start_date, end_date,
                                                                               no_of_shares, multiply, moving_average)
                 sect_ret_results.append((symbol, xirr_value, inv_to_proceed, data[-1][0], data[-1][1]))
             return render(request, 'cal_returns/sect_return.html', {'form': form,

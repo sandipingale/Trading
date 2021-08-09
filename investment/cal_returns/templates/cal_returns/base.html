@@ -35,7 +35,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light">
     <a class="navbar-brand" href="#">Investment/Portfolio</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -43,16 +43,16 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a href="{% url 'home' %}">Home</a>
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'stock_details' %}">Stock Details</a>
+                <a class="nav-link" href="{% url 'stock_details' %}">Stock Details</a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'inv_return_test' %}">Investment Test</a>
+                <a class="nav-link" href="{% url 'inv_return_test' %}">Investment Test</a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'sect_return' %}">Sectoral Returns</a>
+                <a class="nav-link" href="{% url 'sect_return' %}">Sectoral Returns</a>
             </li>
         </ul>
     </div>
@@ -80,13 +80,7 @@
 
 
 
-<script type="text/javascript">
-   $(document).ready(function(){
-        $('.datepicker').datepicker();
-    });
 
-
-</script>
 <script>
   $(document).ready(function() {
 
@@ -105,6 +99,13 @@
 
 
 
+</script>
+<script>
+    document.getElementById("id_start_date").value = "2019-01-01";
+    document.getElementById("id_end_date").value = new Date().toISOString().substr(0, 10);
+    document.getElementById("id_multiply").value = 1.4;
+    document.getElementById("id_moving_average").value = 10;
+    document.getElementById("id_no_of_shares").value = 10;
 </script>
 
 </body>
