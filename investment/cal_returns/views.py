@@ -3,6 +3,7 @@ import sys
 from datetime import date
 from .forms import StockForm, InvStockForm, SectReturnForm
 from .services.query_stocks import  new_inv_test,get_results
+from django.http import JsonResponse
 
 
 
@@ -144,3 +145,17 @@ def sect_return(request):
     else:
         form = SectReturnForm()
         return render(request, 'cal_returns/sect_return.html', {'form': form})
+
+def get_json_inv_test(request):
+    symbol = request.GET.get("symbol", None)
+    if symbol:
+        symbol = symbol
+    else:
+        symbol = 'NIFTYBEES.NS'
+    print(symbol)
+    data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, 'EQ', '2020-01-01', '2021-08-10',
+                                                                      10, 1.4, 10)
+    response = JsonResponse({'symbol':  symbol,
+                             'xirr': xirr_value,
+                             'inv_value': round(inv_to_proceed,2)})
+    return response

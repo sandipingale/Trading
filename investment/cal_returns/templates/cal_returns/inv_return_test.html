@@ -4,27 +4,27 @@
 <form action="inv_return_test" method="post">
     {% csrf_token %}
     <div class="form-row">
-        <div class="form-group col-md-4 col-sm-6">
+        <div class="form-group col-4 col-md-4 col-sm-6">
             <label for="id_symbol_name">Symbol</label>
             {{ form.symbol_name }}
         </div>
-        <div class="form-group col-md-4 col-sm-6">
-            <label for="id_no_of_shares">no_of_shares</label>
+        <div class="form-group col-4 col-md-4 col-sm-6">
+            <label for="id_no_of_shares">Shares</label>
             {{ form.no_of_shares }}
         </div>
-        <div class="form-group col-md-4 col-sm-6">
+        <div class="form-group col-4 col-md-4 col-sm-6">
             <label for="multiply">Multiply</label>
             {{ form.multiply }}
         </div>
-        <div class="form-group col-md-4 col-sm-6">
-            <label for="moving_average">Moving Average</label>
+        <div class="form-group col-4 col-md-4 col-sm-6">
+            <label for="moving_average">MA</label>
             {{ form.moving_average }}
         </div>
-        <div class="form-group col-md-4 col-sm-6">
+        <div class="form-group col-4 col-md-4 col-sm-6">
             <label for="start_date">Start Date</label>
             <input type="date" name="start_date" class="form-control" required="" id="id_start_date">
         </div>
-        <div class="form-group col-md-4 col-sm-6">
+        <div class="form-group col-4 col-md-4 col-sm-6">
             <label for="end_date">End Date</label>
             <input type="date" name="end_date" class="form-control" required="" id="id_end_date">
         </div>

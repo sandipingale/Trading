@@ -95,6 +95,8 @@ def new_inv_test(symbol='symbol', series='series', start_date=date.today(), end_
     df['just_date'] = df['Date'].dt.date
     last_rec = df.tail(1).to_dict('records')
     last_rec = last_rec[0]
+    chart_list = df[['just_date','avg_diff']]
+    print(chart_list)
     inv_to_proceed = last_rec['Close'] + (last_rec['Close'] * df[df['avg_diff'] < 0].mean(axis=0)['avg_diff'] *
                                         multiply_fact / 100)
     inv = df[df['avg_diff'] < df[df['avg_diff'] < 0].mean(axis=0)['avg_diff'] * multiply_fact]
@@ -103,7 +105,8 @@ def new_inv_test(symbol='symbol', series='series', start_date=date.today(), end_
 
     inv_list.append((last_rec['just_date'], last_rec['Close'] * shares))
     for tmp_dt in inv_list:
-        print(type(tmp_dt[0]),tmp_dt[0],tmp_dt[1])
+        pass
+        #print(type(tmp_dt[0]),tmp_dt[0],tmp_dt[1])
     price_dict = {}
     ma_dict = {}
     for index, row in df.iterrows():
