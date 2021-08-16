@@ -1,10 +1,10 @@
-from sqlalchemy import Column, Integer, Text, String, DateTime, Float, Numeric
+from sqlalchemy import Column, String, DateTime, Float, Numeric
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import pandas as pd
 import datetime
-from xirr import xirr
+from investment.cal_returns.services.xirr import xirr
 
 #engine = create_engine('postgresql://postgres:password@localhost:5432/postgres', echo = True)
 engine = create_engine('postgresql://postgres:password@localhost:5432/postgres')

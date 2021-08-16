@@ -19,4 +19,6 @@ from django.urls import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('cal_returns.urls')),
+    path('', include('chartapp.urls')),
+
 ]

@@ -1,44 +1,52 @@
 {% extends "cal_returns/base.html" %}
 {% block title %}Investment Test{% endblock %}
 {% block body %}
+
 <form action="sect_return" method="post">
     {% csrf_token %}
-    <div class="form-inline">
-        <div class="form-group">
-            <label for="sector">Sector</label>
+    <div class="form-row">
+        <div class="form-group col-md-4 col-sm-6">
+            <label for="id_sector">Sector</label>
             {{ form.sector }}
+
         </div>
-        <div class="form-group">
-            <label for="series">Series</label>
-            {{ form.series }}
-        </div>
-        <br>
-        <div class="form-group">
-            <label for="no_of_shares">no_of_shares</label>
+        <div class="form-group col-md-4 col-sm-6">
+            <label for="id_no_of_shares">no_of_shares</label>
             {{ form.no_of_shares }}
         </div>
-        <div class="form-group">
+        <div class="form-group col-md-4 col-sm-6">
             <label for="multiply">Multiply</label>
             {{ form.multiply }}
         </div>
-        <div class="form-group">
+        <div class="form-group col-md-4 col-sm-6">
             <label for="moving_average">Moving Average</label>
             {{ form.moving_average }}
         </div>
-        <div class="form-group">
+        <div class="form-group col-md-4 col-sm-6">
             <label for="start_date">Start Date</label>
-            {{ form.start_date }}
+            <input type="date" name="start_date" class="form-control" required="" id="id_start_date">
         </div>
-        <div class="form-group">
+        <div class="form-group col-md-4 col-sm-6">
             <label for="end_date">End Date</label>
-            {{ form.end_date }}
+            <input type="date" name="end_date" class="form-control" required="" id="id_end_date">
         </div>
 
-        <button type="submit" class="btn btn-default" id="sect_return">Submit</button>
-        <br><br>
+        <div class="d-grid gap-4 col-1 mx-auto">
+            <button type="submit" class="btn btn-primary" id="sect_return">Submit</button>
+        </div>
+    </div>
+    <br>
 
-        <div class="loader" align="center"></div>
 
+</form>
+<div class="row justify-content-center">
+<div class="loader" align="center"></div>
+</div>
+
+
+<br>
+<br>
+<br>
 
         {% if data %}
         <table class="table table-striped table-bordered" style="width:100%" id="example">
@@ -67,6 +75,6 @@
         {% endif %}
 
     </div>
-</form>
+
 
 {% endblock %}

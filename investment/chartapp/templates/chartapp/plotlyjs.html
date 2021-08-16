@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PlotlyJS</title>
+    <script src="https://cdn.plot.ly/plotly-2.3.1.min.js"></script>
+</head>
+<body>
+<div class="container" >
+    <div class="row">
+        <div class="col-sm-6">
+            <div id="tester"></div>
+        </div>
+</div>
+
+
+<script>
+
+
+console.log({{ dates | safe}});
+var trace1 = {
+  type: "scatter",
+  mode: "lines",
+  name: 'AAPL High',
+  x: {{ dates | safe}},
+  y: {{ high | safe}},
+  line: {color: '#17BECF'}
+}
+
+var trace2 = {
+  type: "scatter",
+  mode: "lines",
+  name: 'AAPL Low',
+  x: {{ dates | safe}},
+  y: {{ low | safe}},
+  line: {color: '#7F7F7F'}
+}
+
+var data = [trace1,trace2];
+
+var layout = {
+  title: 'Time Series with Rangeslider',
+  xaxis: {
+    autorange: true,
+    range: ['2020-01-01', '2021-08-16'],
+    rangeselector: {buttons: [
+        {
+          count: 1,
+          label: '1m',
+          step: 'month',
+          stepmode: 'backward'
+        },
+        {
+          count: 6,
+          label: '6m',
+          step: 'month',
+          stepmode: 'backward'
+        },
+        {
+          count: 12,
+          label: '1y',
+          step: 'month',
+          stepmode: 'backward'
+        },
+         {
+          count: 60,
+          label: '5y',
+          step: 'month',
+          stepmode: 'backward'
+        },
+        {step: 'all'}
+      ]},
+    rangeslider: {range: ['2020-01-01', '2021-08-16']},
+    type: 'date'
+  },
+  yaxis: {
+    autorange: true,
+    range: [0, 200],
+    type: 'linear'
+  }
+};
+
+var config = {responsive: true};
+Plotly.newPlot('tester', data, layout,config);
+
+
+
+</script>
+
+</body>
+</html>

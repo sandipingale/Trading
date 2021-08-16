@@ -45,22 +45,27 @@ def load_daily_rates(url_name='url_name'):
 conn = psycopg2.connect(host="localhost",database="postgres", user="postgres", password="password")
 cur = conn.cursor()
 base = datetime.datetime.today()
-date_list = [base - datetime.timedelta(days=x) for x in range(30)]
+base = base - datetime.timedelta(days=1)
+date_list = [base - datetime.timedelta(days=x) for x in range(90)]
 cur.execute('SELECT distinct txn_date as rec_date from stocks')
 rows = cur.fetchall()
 db_date_list = []
 for row in rows:
     db_date_list.append(row[0].date())
 conn.close()
+#print(date_list)
 for csv_date in date_list:
     if csv_date.date() in db_date_list:
+         print(csv_date)
          continue
-    website = "https://www.nseindia.com/content/historical/EQUITIES/" + csv_date.strftime("%Y") + "/" + \
+    website = "https://www1.nseindia.com/content/historical/EQUITIES/" + csv_date.strftime("%Y") + "/" + \
           csv_date.strftime("%b").upper() + "/" + "cm" + csv_date.strftime("%d") + \
           csv_date.strftime("%b").upper() + csv_date.strftime("%Y") + "bhav.csv.zip"
+    print(website)
     request = requests.get(website)
     if request.status_code == 200:
-        print('Web site exists')
+        print('Web site exists', website)
         load_daily_rates(website)
     else:
+        print("issue with the file")
         pass
