@@ -8,6 +8,26 @@ from django.core.serializers.json import DjangoJSONEncoder
 def charts(request):
     return render(request,'chartapp/chartbase.html',{})
 
+def plotly(request):
+    symbol = request.GET.get("symbol", None)
+    if symbol:
+        symbol = symbol
+    else:
+        symbol = 'NIFTYBEES.NS'
+
+
+    start_date = '2020-01-01'
+    end_date = '2021-08-16'
+    symbol = yf.Ticker(symbol)
+    hist = symbol.history(start=start_date, end=end_date)
+    df = hist
+    df = df.reset_index()
+    high = json.dumps(df['High'].tolist())
+    low = json.dumps(df['Low'].tolist())
+    dates = json.dumps(df['Date'].tolist(),cls=DjangoJSONEncoder)
+    return render(request,'chartapp/plotlyjs.html',{'dates':dates,'high':high,'low':low})
+
+
 def analysis(request):
     symbol = request.GET.get("symbol", None)
     if symbol:
