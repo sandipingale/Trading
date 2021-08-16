@@ -9,7 +9,7 @@ def charts(request):
 def get_chart_data(request):
     labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']
     response = JsonResponse({
-                            'type': 'doughnut',
+                            'type': 'bar',
                             'data':{
                                 'labels': labels,
                                 'datasets': [
@@ -42,7 +42,8 @@ def get_chart_data(request):
                                         'beginAtZero': True
                                     }
                                 },
-                                'responsive': True
+                                'responsive': True,
+
                             }
                             },
                             )
