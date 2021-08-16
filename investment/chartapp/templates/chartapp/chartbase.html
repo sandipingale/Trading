@@ -9,12 +9,21 @@
 
 </head>
 <body>
+<div class="btn-group" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-secondary" onclick="drawchart('bar')">Bar</button>
+    <button type="button" class="btn btn-secondary" onclick="drawchart('line')">Line</button>
+    <button type="button" class="btn btn-secondary" onclick="drawchart('pie')">Pie</button>
+    <button type="button" class="btn btn-secondary" onclick="drawchart('doughnut')">Doughnut</button>
+    <button type="button" class="btn btn-secondary" onclick="drawchart('polarArea')">Polararea</button>
+    <button type="button" class="btn btn-secondary" onclick="drawchart('bubble')">Bubble</button>
+</div>
 <div class="container" >
     <div class="row">
-
-        <div class="col-sm-12">
+        <div class="col-md-4"></div>
+        <div class="col-md-6">
         <canvas id="myChart"></canvas>
         </div>
+
 
     </div>
 </div>
@@ -27,9 +36,23 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
-fetch("{% url 'chart-data' %}")
+var chart;
+function drawchart(c_type){
+    var ctx = document.getElementById('myChart').getContext('2d');
+    fetch("{% url 'chart-data' %}"+ "?type=" + c_type)
+      .then(response => response.json())
+      .then(data => {
+               chart.destroy();
+            chart = new Chart(ctx, data);
+      });
+}
+
+
+fetch("{% url 'chart-data' %}"+ "?type=bar")
   .then(response => response.json())
-  .then(data => new Chart(ctx, data));
+  .then(data => chart = new Chart(ctx, data));
+
+console.log(chart);
 </script>
 
 
