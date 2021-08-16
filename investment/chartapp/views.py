@@ -7,9 +7,15 @@ def charts(request):
     return render(request,'chartapp/chartbase.html',{})
 
 def get_chart_data(request):
+    chart_type = request.GET.get("type", None)
+    if chart_type:
+        chart_type = chart_type
+    else:
+        chart_type = 'bar'
+    print(chart_type)
     labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']
     response = JsonResponse({
-                            'type': 'bar',
+                            'type': chart_type,
                             'data':{
                                 'labels': labels,
                                 'datasets': [
