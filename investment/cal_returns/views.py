@@ -153,9 +153,10 @@ def get_json_inv_test(request):
     else:
         symbol = 'NIFTYBEES.NS'
     print(symbol)
-    data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, 'EQ', '2020-01-01', '2021-08-10',
+    data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, 'EQ', '2019-01-01', '2021-08-10',
                                                                       10, 1.4, 10)
     response = JsonResponse({'symbol':  symbol,
                              'xirr': xirr_value,
-                             'inv_value': round(inv_to_proceed,2)})
+                             'inv_value': round(inv_to_proceed,2),
+                             'data': data})
     return response
