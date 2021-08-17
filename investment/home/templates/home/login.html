@@ -1,0 +1,71 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    <title>Login Page</title>
+<style>
+@keyframes example {
+from {transform: scale(1.2);}
+to {transform: scale(1);}
+}
+    #yyyy{
+animation-name: example;
+animation-duration: 2s;
+animation-timing-function: ease;
+
+}
+</style>
+{% endblock %}
+
+{% block body_block %}
+{% if user.is_authenticated is False %}
+
+
+
+<div class="container">
+    <div class="card col-md-6 mx-auto bg-info text-white" id="yyyy">
+        <div class="card-body">
+            <h5 align="center" >Money Management Login </h5>
+                <br>
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_username" >Username:</label>
+                    <input class="form-control" type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
+                </div>
+                <div class="form-group">
+                    <label for="id_password" >Password:</label>
+                    <input class="form-control" type="password" name="password" autocomplete="current-password" required="" id="id_password">
+
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-light" >Submit</button>
+                </div>
+                <br>
+                    {% if form.errors %}
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block script_block %}
+
+{% endblock %}
+
+

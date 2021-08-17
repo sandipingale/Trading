@@ -6,7 +6,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 # Create your views here.
 
 def charts(request):
-    return render(request,'chartapp/chartbase.html',{})
+    return render(request,'chartapp/newchart.html',{})
 
 def plotly(request):
     symbol = request.GET.get("symbol", None)
@@ -16,7 +16,7 @@ def plotly(request):
         symbol = 'NIFTYBEES.NS'
 
 
-    start_date = '2020-01-01'
+    start_date = '2010-01-01'
     end_date = '2021-08-16'
     symbol = yf.Ticker(symbol)
     hist = symbol.history(start=start_date, end=end_date)

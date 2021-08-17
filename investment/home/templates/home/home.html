@@ -1,0 +1,70 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title_block %}
+<title>Home Page</title>
+<style>
+@keyframes example {
+from {transform: scale(0.7);}
+to {transform: scale(1);}
+}
+    .xxxx{
+    transition: width 2s, height 2s, transform 1s;
+    transition-timing-function: linear;
+    animation-name: example;
+    animation-duration: 2s;
+    }
+    .xxxx:hover{
+
+    transform: scale(1.2);
+    }
+</style>
+{% endblock %}
+
+{% block body_block %}
+<div class="container">
+<div class="row row-cols-1 row-cols-md-4">
+    <div class="col mb-4">
+        <div class="card shadow xxxx">
+            <div class="text-center">
+                <div class="card-header bg-info" ><i class="bi bi-bank2" style="font-size: 2rem; color:white"></i></div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Saving Accounts</h5>
+                <a href="#" class="stretched-link"></a>
+            </div>
+        </div>
+    </div>
+    <div class="col mb-4">
+        <div class="card shadow xxxx">
+            <div class="text-center">
+                <div class="card-header bg-info" ><i class="bi bi-graph-up" style="font-size: 2rem; color:white"></i></div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Shares</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col mb-4">
+        <div class="card shadow xxxx">
+            <div class="text-center">
+                <div class="card-header bg-info" ><i class="bi bi-piggy-bank" style="font-size: 2rem; color:white"></i></div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Mutual Fund</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col mb-4">
+        <div class="card shadow xxxx" id="xxxx"">
+            <div class="text-center">
+                <div class="card-header bg-info" ><i class="bi bi-heart-fill" style="font-size: 2rem; color:white"></i></div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Insurance</h5>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
