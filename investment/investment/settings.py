@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cal_returns',
     'chartapp',
+    'shares',
+    'home',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +124,5 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'

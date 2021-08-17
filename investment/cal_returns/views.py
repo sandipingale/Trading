@@ -52,8 +52,8 @@ def inv_return_test(request):
         form = InvStockForm()
         return render(request, 'cal_returns/inv_return_test.html', {'form': form})
 
-def home(request):
-    return render(request,'cal_returns/home.html')
+#def home(request):
+#    return render(request,'cal_returns/home.html')
 
 
 def sect_return(request):

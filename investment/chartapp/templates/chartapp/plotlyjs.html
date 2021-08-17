@@ -9,16 +9,26 @@
 <body>
 <div class="container" >
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
             <div id="tester"></div>
         </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div id="myDiv"></div>
+        </div>
+    </div>
 </div>
+
+
 
 
 <script>
 
 
-console.log({{ dates | safe}});
+
 var trace1 = {
   type: "scatter",
   mode: "lines",
@@ -84,6 +94,54 @@ var layout = {
 var config = {responsive: true};
 Plotly.newPlot('tester', data, layout,config);
 
+
+var data = [
+  {
+    type: "indicator",
+    value: 200,
+    delta: { reference: 160 },
+    gauge: { axis: { visible: false, range: [0, 250] } },
+    domain: { row: 0, column: 0 }
+  },
+  {
+    type: "indicator",
+    value: 120,
+    gauge: {
+      shape: "bullet",
+      axis: {
+        visible: false,
+        range: [-200, 200]
+      }
+    },
+    domain: { x: [0.1, 0.5], y: [0.15, 0.35] }
+  },
+  {
+    type: "indicator",
+    mode: "number+delta",
+    value: 300,
+    domain: { row: 0, column: 1 }
+  },
+  { type: "indicator", mode: "delta", value: 40, domain: { row: 1, column: 1 } }
+];
+
+var layout = {
+
+  margin: { t: 25, b: 25, l: 25, r: 25 },
+  grid: { rows: 2, columns: 2, pattern: "independent" },
+  template: {
+    data: {
+      indicator: [
+        {
+          title: { text: "Speed" },
+          mode: "number+delta+gauge",
+          delta: { reference: 90 }
+        }
+      ]
+    }
+  }
+};
+
+Plotly.newPlot('myDiv', data, layout,config);
 
 
 </script>
