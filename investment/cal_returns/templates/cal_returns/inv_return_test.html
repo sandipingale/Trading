@@ -1,12 +1,15 @@
-{% extends "cal_returns/base.html" %}
+{% extends "home/base.html" %}
 {% block title %}Investment Test{% endblock %}
-{% block body %}
+{% block body_block %}
+<div class="container">
 <form action="inv_return_test" method="post">
     {% csrf_token %}
     <div class="form-row">
         <div class="form-group col-4 col-md-4 col-sm-6">
             <label for="id_symbol_name">Symbol</label>
-            {{ form.symbol_name }}
+            <select id="id_symbol_name" name="symbol_name" class="form-control" required >
+                <option value="" selected="">---------</option>
+            </select>
         </div>
         <div class="form-group col-4 col-md-4 col-sm-6">
             <label for="id_no_of_shares">Shares</label>
@@ -30,7 +33,7 @@
         </div>
 
         <div class="d-grid gap-4 col-1 mx-auto">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-success">Submit</button>
         </div>
     </div>
 </form>
@@ -91,7 +94,67 @@
     </div>
 
         {% endif %}
+</div>
+
+
+{% endblock %}
+
+{% block script_block %}
+<script>
+var data = [
+    {
+        id: 0,
+        text: 'SBIN.NS'
+    },
+    {
+        id: 1,
+        text: 'TCS.NS'
+    },
+    {
+        id: 2,
+        text: 'INFY.NS'
+    },
+    {
+        id: 3,
+        text: 'MARUTI.NS'
+    },
+    {
+        id: 4,
+        text: 'TATAMOTORS.NS'
+    }
+];
+$(document).ready(function() {
+$('#id_symbol_name').select2({
+//data:data
+ajax: {
+    url: "{% url 'get_share_list' %}",
+    dataType: 'json',
+    delay: 250,
+    data: function (params) {
+      return {
+        q: params.term, // search term
+        page: params.page
+      };
+    },
+    processResults: function (data, params) {
+    console.log(data);
+    return {
+        results: data.results,
+        pagination: {
+          more: (params.page * 30) < data.total_count
+        }
+      };
+    },
+    cache: true,
+    minimumInputLength: 2,
+
+    // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+  },
+  minimumInputLength: 2,
+});
+});
 
 
 
+</script>
 {% endblock %}

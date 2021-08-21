@@ -1,9 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 import sys
 from datetime import date
 from .forms import StockForm, InvStockForm, SectReturnForm
 from .services.query_stocks import  new_inv_test,get_results
 from django.http import JsonResponse
+import os
+sys.path.append(os.path.abspath('.'))
+from shares.models import ShareList
+
 
 
 
@@ -31,7 +35,15 @@ def inv_return_test(request):
         form = InvStockForm(request.POST)
         if form.is_valid():
             symbol = form.cleaned_data['symbol_name']
-#            series = form.cleaned_data['series']
+            symbol_temp = ""
+            if ShareList.objects.filter(id=symbol).exists():
+                symbol_obj = get_object_or_404(ShareList,id=symbol)
+                symbol_temp = symbol_obj.text
+            elif ShareList.objects.filter(text=symbol).exists():
+                symbol_temp =  symbol
+            symbol = symbol_temp
+            #symbol = form.cleaned_data['symbol_name']
+#           series = form.cleaned_data['series']
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
             no_of_shares = form.cleaned_data['no_of_shares']
@@ -152,7 +164,7 @@ def get_json_inv_test(request):
         symbol = symbol
     else:
         symbol = 'NIFTYBEES.NS'
-    print(symbol)
+    #print(symbol)
     data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, 'EQ', '2019-01-01', '2021-08-10',
                                                                       10, 1.4, 10)
     response = JsonResponse({'symbol':  symbol,

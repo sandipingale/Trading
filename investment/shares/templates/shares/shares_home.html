@@ -1,0 +1,51 @@
+{% extends 'home/base.html' %}
+{% block body_block %}
+<div class="container-sm">
+
+    <div class="text-right">
+        <a class="btn btn-outline-success" href="{% url 'add_shares' %}">
+             <i class="bi bi-plus-circle"></i>
+        </a>
+    </div>
+    <br>
+
+    <div class="table-responsive">
+        <table class="table table-sm table-hover table-striped table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Units</th>
+                    <th scope="col">Gain</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for symbol,value in returns.items %}
+
+
+                 <tr>
+                    <td>
+                        <a href="{% url 'share_details' symbol %}">
+                            <i class="bi bi-arrow-up-right-circle-fill" style="color:green"></i>
+                        </a>
+                        <img src="{{ value.logo }}" width="40" style="border-radius:50%"/>
+                        {{ symbol }}
+                    </td>
+                    <td>{{ value.units|floatformat:0 }}</td>
+
+                    <td>
+                        {% if value.returns > 0 %}
+                            <i class="bi bi-arrow-up-circle-fill" style="color:green"></i>
+                        {% else %}
+                            <i class="bi bi-arrow-down-circle-fill" style="color:red"></i>
+                        {% endif %}
+                        {{ value.returns|floatformat:2 }}
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

@@ -96,7 +96,7 @@ def new_inv_test(symbol='symbol', series='series', start_date=date.today(), end_
     last_rec = df.tail(1).to_dict('records')
     last_rec = last_rec[0]
     chart_list = df[['just_date','avg_diff']]
-    print(chart_list)
+    #print(chart_list)
     inv_to_proceed = last_rec['Close'] + (last_rec['Close'] * df[df['avg_diff'] < 0].mean(axis=0)['avg_diff'] *
                                         multiply_fact / 100)
     inv = df[df['avg_diff'] < df[df['avg_diff'] < 0].mean(axis=0)['avg_diff'] * multiply_fact]

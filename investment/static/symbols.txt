@@ -1,24 +1,11 @@
-import yfinance as yf
-import json
-
-
-#symbol = yf.Ticker("ZOMATO.NS")
-#print(symbol.info['logo_url'])
-#hist = symbol.history(period='5d')
-# get stock info
-#print(hist['Close'].index[-1])
-#print(symbol.actions)
-
-# get historical market data
-symbol_list = """20MICRONS
+20MICRONS
 21STCENMGM
 3MINDIA
 5PAISA
 63MOONS
 A2ZINFRA
-AAKASH"""
-
-"""AAREYDRUGS
+AAKASH
+AAREYDRUGS
 AARON
 AARTIDRUGS
 AARTIIND
@@ -1530,14 +1517,4 @@ ZODIACLOTH
 ZODJRDMKJ
 ZOMATO
 ZOTA
-ZYDUSWELL"""
-lines = symbol_list.split('\n')
-symbol_list = []
-id = 0
-for x in lines:
-    print(f"{x}.NS")
-    symbol_list.append({'id': id, 'text': f"{x}.NS"})
-    id = id  +1
-
-print(json.dumps(symbol_list))
-
+ZYDUSWELL
