@@ -1,7 +1,8 @@
-{% extends "cal_returns/base.html" %}
+{% extends "home/base.html" %}
 {% block title %}Investment Test{% endblock %}
-{% block body %}
+{% block body_block %}
 
+<div class="container">
 <form action="sect_return" method="post">
     {% csrf_token %}
     <div class="form-row">
@@ -32,7 +33,7 @@
         </div>
 
         <div class="d-grid gap-4 col-1 mx-auto">
-            <button type="submit" class="btn btn-primary" id="sect_return">Submit</button>
+            <button type="submit" class="btn btn-success" id="sect_return">Submit</button>
         </div>
     </div>
     <br>
@@ -76,5 +77,5 @@
 
     </div>
 
-
+</div>
 {% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'home/base.html' %}
+{% block body_block %}
+
+<div class="container">
+
+<form method="post" >
+
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="id_symbol"><b>Symbol:</b></label>
+            <!--input type="text" name="symbol" maxlength="30" required="" id="id_symbol" class="form-control"
+                   value={% if form.symbol.value %} "{{form.symbol.value}}" {% endif %}-->
+            <select id="id_symbol" name="symbol" class="form-control" oninput="update_name()">
+                {% if form.symbol.value %}
+                <option selected="{{ form.symbol.value }}">{{form.symbol.value}}</option>
+                {% else %}
+                <option value="" selected="">---------</option>
+                {% endif %}
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="id_name"><b>Name:</b></label>
+            <input type="text" name="name" maxlength="30" required="" id="id_name" class="form-control"
+                   value={% if form.name.value %} "{{form.name.value}}" {% endif %}>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="id_quantity"><b>Quantity:</b></label>
+            <input type="number" name="quantity" required="" id="id_quantity" class="form-control" min="1" value="{{form.quantity.value}}">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="id_share_price"><b>Share Price:</b></label>
+            <input type="number" name="share_price" step="any" required="" id="id_share_price" class="form-control" min="1" step="0.01" value="{{form.share_price.value}}">
+
+        </div>
+        <div class="form-group col-md-4">
+            <label for="id_txn_date"><b>Date:</b></label>
+
+            <input type="date" name="txn_date" required="" id="id_txn_date" class="form-control" value="{{form.txn_date.value|date:'Y-m-d'}}">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="id_txn_type"><b>Type:</b></label>
+            <select name="txn_type" required="" id="id_txn_type" class="form-control" value="{{form.txn_type.value}}">
+                {% if form.txn_type.value %}
+                <option value="{{ form.txn_type.value }}">{{form.txn_type.value}}</option>
+                {% else %}
+                <option value="" selected="">---------</option>
+                {% endif %}
+                <option value="BUY">BUY</option>
+                <option value="SELL">SELL</option>
+                <option value="DIV">DIV</option>
+            </select>
+        </div>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-success" >Submit</button>
+    </div>
+</form>
+</div>
+{% endblock %}
+
+{% block script_block %}
+<script>
+var data = [
+    {
+        id: 0,
+        text: 'SBIN.NS'
+    },
+    {
+        id: 1,
+        text: 'TCS.NS'
+    },
+    {
+        id: 2,
+        text: 'INFY.NS'
+    },
+    {
+        id: 3,
+        text: 'MARUTI.NS'
+    },
+    {
+        id: 4,
+        text: 'TATAMOTORS.NS'
+    }
+];
+$(document).ready(function() {
+$('#id_symbol').select2({
+//data:data
+ajax: {
+    url: "{% url 'get_share_list' %}",
+    dataType: 'json',
+    delay: 250,
+    data: function (params) {
+      return {
+        q: params.term, // search term
+        page: params.page
+      };
+    },
+    processResults: function (data, params) {
+    console.log(data);
+    return {
+        results: data.results,
+        pagination: {
+          more: (params.page * 30) < data.total_count
+        }
+      };
+    },
+    cache: true,
+    minimumInputLength: 2,
+
+    // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+  },
+  minimumInputLength: 2,
+});
+});
+
+function update_name()
+{
+    var s_list = {
+        "SBIN.NS": "State Bank of India",
+        "TCS.NS": "TCS",
+        "INFY.NS": "Infosys"
+    }
+    symbol = document.getElementById("id_symbol").value;
+    document.getElementById("id_name").value = symbol;
+
+}
+
+</script>
+{% endblock %}

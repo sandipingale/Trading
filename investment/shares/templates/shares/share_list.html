@@ -1,0 +1,125 @@
+{% extends 'home/base.html' %}
+{% block body_block %}
+<div class="container">
+    <div class="alert alert-success" role="alert">
+        <div class="row">
+            <div class="col-sm-2">
+                <a href="{% url 'shares' %}"><i class="bi bi-arrow-left-square" style="font-size: 1rem;"></i></a>
+            </div>
+            <div class="col-sm-8">
+                <div class="text-center">
+                    {{ symbol }}
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-6">
+        <div class="col mb-4">
+            <div class="card shadow border-success">
+                <div class="card-body">
+                    <h5 class="card-title">Units</h5>
+                    <p class="card-text">{{ units|floatformat:0 }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card shadow border-success">
+                <div class="card-body">
+                    <h5 class="card-title">Investment</h5>
+                    <p class="card-text">{{total_inv|floatformat:2}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card shadow border-success">
+                <div class="card-body">
+                    <h5 class="card-title">Returns</h5>
+                    <p class="card-text">
+                        {% if xirr > 0 %}
+                        <i class="bi bi-arrow-up-circle-fill" style="color:green"></i>
+                        {% else %}
+                        <i class="bi bi-arrow-down-circle-fill" style="color:red"></i>
+                        {% endif %}
+                        {{ xirr|floatformat:2 }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card shadow border-success">
+                <div class="card-body">
+                    <h5 class="card-title">Last Price</h5>
+                    <p class="card-text">{{last_price|floatformat:2}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card shadow border-success">
+                <div class="card-body">
+                    <h5 class="card-title">Avg price</h5>
+                    <p class="card-text">{{ avg_price|floatformat:2 }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="card shadow border-success">
+                <div class="card-body">
+                    <h5 class="card-title">Dividend</h5>
+                    <p class="card-text">{{ div }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="table-responsive">
+        <table class="table table-sm table-hover table-striped table-bordered">
+            <thead class="thead-light">
+            <tr>
+
+                <th scope="col">Date</th>
+                <th scope="col">Units</th>
+                <th scope="col">Type</th>
+                <th scope="col">Txn Price</th>
+                <th></th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for share in shares %}
+            <tr>
+
+                <td>
+                    <a  href="{% url 'update_share' share.id %}">
+                        <i class="bi bi-pencil-square" style="color:green"></i>
+                    </a>
+                     {{ share.txn_date|date:'m/d/Y' }}
+                </td>
+                <td>{{ share.quantity|floatformat:0 }}</td>
+                <td>{{ share.txn_type }}</td>
+                <td>
+                    {{ share.share_price }}
+
+                </td>
+                <td style="text-align:center">
+                    <a  href="{% url 'update_share' share.id %}" style="text-align:right">
+                        <i class="bi bi-trash-fill" style="color:red"></i>
+                    </a>
+                </td>
+
+            </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}
