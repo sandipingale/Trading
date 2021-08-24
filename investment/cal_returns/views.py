@@ -5,12 +5,13 @@ from .forms import StockForm, InvStockForm, SectReturnForm
 from .services.query_stocks import  new_inv_test,get_results
 from django.http import JsonResponse
 import os
+from django.contrib.auth.decorators import login_required
 sys.path.append(os.path.abspath('.'))
 from shares.models import ShareList
 
 
 
-
+@login_required()
 def stock_details(request):
     if request.method == 'POST':
         form = StockForm(request.POST)
@@ -29,7 +30,7 @@ def stock_details(request):
         form = StockForm()
         return render(request, 'cal_returns/stock_details.html', {'form': form})
 
-
+@login_required()
 def inv_return_test(request):
     if request.method == 'POST':
         form = InvStockForm(request.POST)
@@ -67,7 +68,7 @@ def inv_return_test(request):
 #def home(request):
 #    return render(request,'cal_returns/home.html')
 
-
+from django.contrib.auth.decorators import login_required
 def sect_return(request):
     if request.method == 'POST':
         form = SectReturnForm(request.POST)
@@ -83,14 +84,14 @@ def sect_return(request):
             if sector == 'IT':
                 symbols = ['WIPRO.NS', 'TCS.NS', 'INFY.NS', 'TECHM.NS', 'NIITLTD.NS', 'HCLTECH.NS', 'TATAELXSI.NS', 'MINDTREE.NS', ]
             if sector == 'Auto':
-                symbols = ['ASHOKLEY', 'HEROMOTOCO', 'M&M', 'APOLLOTYRE', 'MRF', 'BAJAJ-AUTO', 'MARUTI', 'EICHERMOT',
-                           'MOTHERSUMI', 'TVSMOTOR', 'TATAMOTORS', 'BOSCHLTD', 'EXIDEIND', 'AMARAJABAT', 'BHARATFORG']
+                symbols = ['ASHOKLEY.NS', 'HEROMOTOCO.NS', 'M&M.NS', 'APOLLOTYRE.NS', 'MRF.NS', 'BAJAJ-AUTO.NS', 'MARUTI.NS', 'EICHERMOT.NS',
+                           'MOTHERSUMI.NS', 'TVSMOTOR.NS', 'TATAMOTORS.NS', 'BOSCHLTD.NS', 'EXIDEIND.NS', 'AMARAJABAT.NS', 'BHARATFORG.NS']
             if sector == 'Bank':
-                symbols = ['IDFCFIRSTB', 'INDUSINDBK', 'YESBANK', 'SBIN', 'AXISBANK', 'PNB', 'HDFCBANK', 'BANKBARODA',
-                           'RBLBANK', 'ICICIBANK', 'KOTAKBANK', 'FEDERALBNK']
+                symbols = ['IDFCFIRSTB.NS', 'INDUSINDBK.NS', 'YESBANK.NS', 'SBIN.NS', 'AXISBANK.NS', 'PNB.NS', 'HDFCBANK.NS', 'BANKBARODA.NS',
+                           'RBLBANK.NS', 'ICICIBANK.NS', 'KOTAKBANK.NS', 'FEDERALBNK.NS']
             if sector == 'ETF':
-                symbols = ['NIFTYBEES', 'KOTAKBKETF', 'CPSEETF', 'SETFNIFBK', 'SETFNIF50', 'BANKBEES', 'ICICINIFTY',
-                           'GOLDBEES', 'ICICILIQ']
+                symbols = ['NIFTYBEES.NS', 'KOTAKBKETF.NS', 'CPSEETF.NS', 'SETFNIFBK.NS', 'SETFNIF50.NS', 'BANKBEES.NS', 'ICICINIFTY.NS',
+                           'GOLDBEES.NS', 'ICICILIQ.NS']
             if sector == 'NIFTY50':
                 symbols = [
                     'ADANIPORTS.NS',
@@ -157,7 +158,7 @@ def sect_return(request):
     else:
         form = SectReturnForm()
         return render(request, 'cal_returns/sect_return.html', {'form': form})
-
+@login_required()
 def get_json_inv_test(request):
     symbol = request.GET.get("symbol", None)
     if symbol:
