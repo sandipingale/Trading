@@ -10,9 +10,11 @@ from django.http import JsonResponse
 from django.templatetags.static import static
 from .services.share_list import symbols
 import json
-sys.path.append("../cal_returns/services")
-sys.path.append(os.path.abspath('cal_returns/services'))
-from xirr import xirr
+#sys.path.append("../cal_returns/services")
+#sys.path.append(os.path.abspath('cal_returns/services')
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/..")
+#from ..cal_returns.services.xirr import xirr
+from cal_returns.services.xirr import xirr
 
 # Create your views here.
 

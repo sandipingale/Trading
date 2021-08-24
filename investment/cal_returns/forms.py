@@ -21,7 +21,7 @@ class InvStockForm(forms.Form):
 
 
 class SectReturnForm(forms.Form):
-    sector_choices = ([('Bank', 'Bank'),('IT','IT')])
+    sector_choices = ([('Bank', 'Bank'),('IT','IT'),('ETF','ETF'),('Auto','Auto'),('NIFTY50','NIFTY50')])
     sector = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),choices=sector_choices)
     #sector = forms.ChoiceField(required=True,choices=sector_choices)
 #    series = forms.CharField(label='Series', max_length=5)
