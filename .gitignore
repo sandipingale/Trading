@@ -1,2 +1,2 @@
 *.py[co]
-investment/db.sqlite3
+db.sqlite3
