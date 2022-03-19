@@ -1,0 +1,36 @@
+{% extends 'home/base.html' %}
+{% block body_block %}
+
+{{ account.acct_number }}
+{{ account.initial_balance }}
+
+
+<div class="container">
+    <div class="text-center">
+        <h3>Category List</h3>
+        <br>
+    </div>
+    <div class="text-right">
+        <a href="{% url 'add_savings_acct_category'%}"><i class="bi bi-plus-square-fill text-success" style="font-size: 2rem; color: cornflowerblue;"></i></a>
+    </div>
+    <table class="table  table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Category</th>
+            <th >Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr>
+                <td>{{category.category }}</td>
+                <td><a href="categories/update/{{category.id}}"><i class="bi bi-pencil-square text-success" style="font-size: 1rem; color: cornflowerblue;"></i></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+
+{% endblock %}

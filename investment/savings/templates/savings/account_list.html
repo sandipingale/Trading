@@ -16,7 +16,7 @@
 
                     <div class="card-body">
                         <h5 class="card-title">{{account.acct_name}} <a href="savings/update/{{account.id}}"><i class="bi bi-pencil-square text-success" style="font-size: 1rem; color: cornflowerblue;"></i></a>
-                            <i class="bi bi-plus-square text-success" style="font-size: 1rem; color: cornflowerblue;"></i>
+                            <a href="{%url 'add_acct_transaction' %}"><i class="bi bi-plus-square text-success" style="font-size: 1rem; color: cornflowerblue;"></i></a>
                         </h5>
                         <p class="card-text">{{account.acct_number}} ({{account.acct_type}})</p>
                         <p class="card-text">{{account.balance}} </p>

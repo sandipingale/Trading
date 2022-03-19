@@ -1,16 +1,13 @@
 from django.db import models
-
-# Create your models here.
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-# Create your models here.
 
 class BankAccount(models.Model):
     acct_types = [
         ('SAVING', 'SAVING'),
         ('FD', 'FD'),
-        ('PPF','PPF')
+        ('PPF', 'PPF')
     ]
 
     acct_number = models.CharField(max_length=30)
@@ -19,8 +16,13 @@ class BankAccount(models.Model):
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     initial_balance = models.FloatField()
     balance = models.FloatField(default=0)
+
     def get_absolute_url(self):
         return reverse('bank-acct-details')
+
+
+class TransactionCategory(models.Model):
+    category = models.CharField(max_length=50)
 
 
 class BankTransactions(models.Model):
@@ -28,18 +30,10 @@ class BankTransactions(models.Model):
         ('CREDIT', 'CREDIT'),
         ('DEBIT', 'DEBIT')
         ]
-    txn_categories = [
-        ('Utility', 'Utility'),
-        ('Medicine', 'Medicine'),
-        ('Automobile', 'Automobile'),
-        ('Education', 'Education'),
-        ('Entertainment', 'Entertainment'),
-        ('Food', 'Food'),
-        ('Groceries', 'Groceries'),
-        ('Tax', 'Tax')
-    ]
+
     txn_type = models.CharField(max_length=10, choices=txn_type_choices)
     txn_amount = models.FloatField()
     bank_account = models.ForeignKey(BankAccount, on_delete=models.SET_NULL, null=True, blank=True)
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    txn_category = models.CharField(max_length=20, choices=txn_categories)
+    txn_category = models.ForeignKey(TransactionCategory, on_delete=models.SET_NULL, null=True, blank=True)
+

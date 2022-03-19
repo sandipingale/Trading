@@ -1,0 +1,42 @@
+{% extends 'home/base.html' %}
+{% block body_block %}
+
+{{ account.acct_number }}
+{{ account.initial_balance }}
+
+
+<div class="container">
+    <div class="text-center">
+        <h3>Transaction List</h3>
+        <br>
+    </div>
+    <div class="text-right">
+        <a href="{% url 'add_acct_transaction'%}"><i class="bi bi-plus-square-fill text-success" style="font-size: 2rem; color: cornflowerblue;"></i></a>
+    </div>
+    <table class="table  table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Transaction Type</th>
+            <th scope="col">Transaction Amount</th>
+            <th scope="col">Account</th>
+            <th scope="col">Category</th>
+            <th >Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for txn in transactions %}
+            <tr>
+                <td>{{txn.txn_type }}</td>
+                <td>{{txn.txn_amount }}</td>
+                <td>{{txn.bank_account.acct_name }}</td>
+                <td>{{txn.txn_category.category }}</td>
+                <td><a href="transaction/update/{{txn.id}}"><i class="bi bi-pencil-square text-success" style="font-size: 1rem; color: cornflowerblue;"></i></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+
+{% endblock %}

@@ -7,7 +7,51 @@
 </div>
 <form method="post" action="">
 {% csrf_token %}
-    {{ form }}
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="id_txn_type">Transaction Type</label>
+            <select name="txn_type" required id="id_txn_type" class="form-control">
+                {% if form.txn_type.value %}
+                    <option value="{{form.txn_type.value}}" selected>{{form.txn_type.value}}</option>
+                {% else %}
+                    <option value selected>--------</option>
+                {% endif %}
+                <option value="CREDIT">CREDIT</option>
+                <option value="DEBIT">DEBIT</option>
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="id_bank_account">Bank Account</label>
+            <select name="bank_account" required id="id_bank_Account" class="form-control">
+                     <option value selected>--------</option>
+                {% for acct in accounts %}
+                    {% if acct.id == form.bank_account.value %}
+                        <option value="{{acct.id}}" selected>{{acct.acct_name}}-{{acct.acct_number}}</option>
+                    {% else %}
+                        <option value="{{acct.id}}">{{acct.acct_name}}-{{acct.acct_number}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="id_txn_category">Transaction Category</label>
+            <select name="txn_category" required id="id_txn_category" class="form-control">
+                <option value selected>--------</option>
+                {% for cat in categories %}
+                    {% if cat.id == form.txn_category.value %}
+                        <option value="{{cat.id}}" selected>{{cat.category}}</option>
+                    {% else %}
+                        <option value="{{cat.id}}">{{cat.category}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="id_txn_amount">Transaction Amount</label>
+            <input type="number" name="txn_amount" required step="any" class="form-control" id="id_txn_amount"
+                   value={% if form.txn_amount.value %} "{{form.txn_amount.value}}" {%endif%}>
+        </div>
+    </div>
     <div class="text-center">
         <button type="submit" class="btn btn-success" >Submit</button>
     </div>
