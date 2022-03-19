@@ -22,5 +22,6 @@ urlpatterns = [
     path('', include('chartapp.urls')),
     path('', include('home.urls')),
     path('', include('shares.urls')),
+    path('', include('savings.urls')),
 
 ]

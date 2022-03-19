@@ -8,6 +8,7 @@ import os
 from django.contrib.auth.decorators import login_required
 sys.path.append(os.path.abspath('.'))
 from shares.models import ShareList
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -68,7 +69,7 @@ def inv_return_test(request):
 #def home(request):
 #    return render(request,'cal_returns/home.html')
 
-from django.contrib.auth.decorators import login_required
+@login_required()
 def sect_return(request):
     if request.method == 'POST':
         form = SectReturnForm(request.POST)

@@ -1,0 +1,54 @@
+{% extends 'home/base.html' %}
+{% block body_block %}
+<div class="container">
+<div class="text-center">
+    <h3>Update Account Information</h3>
+    <br>
+</div>
+<form method="post" action="">
+{% csrf_token %}
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="id_acct_number">Account Number</label>
+            <input type="text" name="acct_number" required class="form-control" id="id_acct_number"
+                   value={% if form.acct_number.value %} "{{ form.acct_number.value}}" {% endif %}>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="id_acct_name">Account Name</label>
+            <input type="text" name="acct_name" required class="form-control" id="id_acct_name"
+                   value={% if form.acct_name.value %} "{{ form.acct_name.value}}" {% endif %}>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="id_acct_type">Account type</label>
+            <select name="acct_type" required id="id_acct_type" class="form-control">
+                {% if form.acct_type.value %}
+                    <option selected="{{form.acct_type.value}}">{{form.acct_type.value}}</option>
+                {% else %}
+                    <option value selected>---------</option>
+                {% endif %}
+                    <option value="SAVING">SAVING</option>
+                    <option value="FD">FD</option>
+                    <option value="PPF">PPF</option>
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="id_initial_balance">Initial Balance</label>
+            <input type="number" name="initial_balance" required step="any" class="form-control" id="id_initial_balance"
+            value={% if form.initial_balance.value %} "{{form.initial_balance.value}}" {%endif%}>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-success" >Submit</button>
+    </div>
+</form>
+    <br><br>
+    {% if error %}
+    <div class="text-center">
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
