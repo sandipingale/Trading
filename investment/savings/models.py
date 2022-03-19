@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from datetime import date
 
 
 class BankAccount(models.Model):
@@ -31,6 +32,7 @@ class BankTransactions(models.Model):
         ('DEBIT', 'DEBIT')
         ]
 
+    txn_date = models.DateField()
     txn_type = models.CharField(max_length=10, choices=txn_type_choices)
     txn_amount = models.FloatField()
     bank_account = models.ForeignKey(BankAccount, on_delete=models.SET_NULL, null=True, blank=True)

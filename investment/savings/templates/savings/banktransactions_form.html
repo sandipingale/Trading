@@ -8,7 +8,7 @@
 <form method="post" action="">
 {% csrf_token %}
     <div class="form-row">
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-2">
             <label for="id_txn_type">Transaction Type</label>
             <select name="txn_type" required id="id_txn_type" class="form-control">
                 {% if form.txn_type.value %}
@@ -46,10 +46,15 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-2">
             <label for="id_txn_amount">Transaction Amount</label>
             <input type="number" name="txn_amount" required step="any" class="form-control" id="id_txn_amount"
                    value={% if form.txn_amount.value %} "{{form.txn_amount.value}}" {%endif%}>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="id_txn_date">Transaction Date</label>
+            <input type="date" name="txn_date" required class="form-control" id="id_txn_date"
+                   value={% if form.txn_date.value %} "{{form.txn_date.value | date:'c'}}" {%endif%}>
         </div>
     </div>
     <div class="text-center">

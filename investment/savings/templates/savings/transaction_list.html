@@ -16,6 +16,7 @@
     <table class="table  table-hover">
         <thead>
         <tr>
+            <th scope="col">Transaction Date</th>
             <th scope="col">Transaction Type</th>
             <th scope="col">Transaction Amount</th>
             <th scope="col">Account</th>
@@ -26,6 +27,7 @@
         <tbody>
             {% for txn in transactions %}
             <tr>
+                <td>{{txn.txn_date }}</td>
                 <td>{{txn.txn_type }}</td>
                 <td>{{txn.txn_amount }}</td>
                 <td>{{txn.bank_account.acct_name }}</td>
