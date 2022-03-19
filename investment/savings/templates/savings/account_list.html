@@ -1,0 +1,31 @@
+{% extends 'home/base.html' %}
+{% block body_block %}
+
+{{ account.acct_number }}
+{{ account.initial_balance }}
+
+
+<div class="container">
+    <div class="text-right">
+        <a href="{% url 'add_savings_acct'%}"><i class="bi bi-plus-square-fill text-success" style="font-size: 2rem; color: cornflowerblue;"></i></a>
+    </div>
+    <div class="row row-cols-1 row-cols-md-4">
+        {% for account in accounts %}
+            <div class="col mb-4 ">
+                <div class="card shadow p-3 mb-5 bg-white rounded border-success">
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{account.acct_name}} <a href="savings/update/{{account.id}}"><i class="bi bi-pencil-square text-success" style="font-size: 1rem; color: cornflowerblue;"></i></a>
+                            <i class="bi bi-plus-square text-success" style="font-size: 1rem; color: cornflowerblue;"></i>
+                        </h5>
+                        <p class="card-text">{{account.acct_number}} ({{account.acct_type}})</p>
+                        <p class="card-text">{{account.balance}} </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
