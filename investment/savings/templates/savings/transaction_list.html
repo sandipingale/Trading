@@ -32,7 +32,7 @@
                 <td>{{txn.txn_amount }}</td>
                 <td>{{txn.bank_account.acct_name }}</td>
                 <td>{{txn.txn_category.category }}</td>
-                <td><a href="transaction/update/{{txn.id}}"><i class="bi bi-pencil-square text-success" style="font-size: 1rem; color: cornflowerblue;"></i></a></td>
+                <td><a href="{% url 'get_acct_transaction' %}/update/{{txn.id}}"><i class="bi bi-pencil-square text-success" style="font-size: 1rem; color: cornflowerblue;"></i></a></td>
             </tr>
             {% endfor %}
         </tbody>
