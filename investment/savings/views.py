@@ -55,6 +55,12 @@ def get_bank_transaction(request):
     context = {"transactions": transactions}
     return render(request, "savings/transaction_list.html", context=context)
 
+@login_required()
+def get_bank_transaction_for_account(request,pk):
+    transactions = BankTransactions.objects.filter(owner=request.user).filter(bank_account=pk)
+    print(transactions)
+    context = {"transactions": transactions}
+    return render(request, "savings/transaction_list.html", context=context)
 
 @login_required()
 def create_bank_transaction(request):
@@ -81,7 +87,6 @@ def create_bank_transaction(request):
 @login_required()
 def update_bank_transaction(request, pk):
     obj = get_object_or_404(BankTransactions, id=pk)
-    print(obj)
     form = BankAccountTransactionForm(request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
