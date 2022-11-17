@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.auth.models import User
 
 from .forms import CreateUserform
 from django.contrib.auth.forms import AuthenticationForm
@@ -29,6 +30,10 @@ def register_user(request):
         form = CreateUserform(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
+            check_user_on_email = User.objects.filter(email=user.email)
+            if check_user_on_email:
+                context["errors"] = ["Email already in use"]
+                return render(request, 'registrations/register.html', context)
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
