@@ -22,8 +22,11 @@ to {transform: scale(1);}
 {% endblock %}
 
 {% block body_block %}
+
+
 <div class="container">
 <div class="row row-cols-2 row-cols-md-4">
+    {% if 'bank_account_group' in request.session.groups %}
     <div class="col mb-4">
         <div class="card shadow xxxx">
             <div class="text-center">
@@ -35,6 +38,8 @@ to {transform: scale(1);}
             </div>
         </div>
     </div>
+    {% endif %}
+    {% if 'shares_group' in request.session.groups %}
     <div class="col mb-4">
         <div class="card shadow xxxx">
             <div class="text-center">
@@ -46,6 +51,8 @@ to {transform: scale(1);}
             </div>
         </div>
     </div>
+    {% endif %}
+    {% if 'mf_group' in request.session.groups %}
     <div class="col mb-4">
         <div class="card shadow xxxx">
             <div class="text-center">
@@ -56,6 +63,8 @@ to {transform: scale(1);}
             </div>
         </div>
     </div>
+    {% endif %}
+    {% if 'insurance_group' in request.session.groups %}
     <div class="col mb-4">
         <div class="card shadow xxxx" id="xxxx"">
             <div class="text-center">
@@ -66,6 +75,7 @@ to {transform: scale(1);}
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
 </div>
 {% endblock %}

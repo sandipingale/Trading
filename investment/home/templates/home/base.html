@@ -50,30 +50,50 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarText">
+       
         <ul class="navbar-nav mr-auto">
+            {% if user.is_authenticated %}
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
             </li>
+            
+            {% if 'bank_account_group' in request.session.groups %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'bank-acct-details' %}">Saving Accounts</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'shares' %}">Shares</a>
-            </li>
+            {% endif %}
+
+            {% if 'shares_group' in request.session.groups %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shares' %}">Shares</a>
+                </li>
+            {% endif %}
+
+            {% if 'mf_group' in request.session.groups %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'home' %}">MF</a>
             </li>
+            {% endif %}
+
+            {% if 'insurance_group' in request.session.groups %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'home' %}">Insurance</a>
             </li>
+            {% endif %}
+
+            {% endif %}
+
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'inv_return_test' %}">Investment Test</a>
             </li>
+            {% if 'shares_group' in request.session.groups %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'sect_return' %}">Sector Returns</a>
             </li>
+            {% endif %}
 
         </ul>
+        
         <span class="navbar-text">
             {% if user.is_authenticated %}
             <p>Welcome {{ user.username }}.
