@@ -15,10 +15,11 @@ from django.core.mail import send_mail
 from .token import account_activation_token
 from django.utils.encoding import force_text
 from django.contrib import messages
+from .decorators import unauthenticated_user
 
 # Create your views here.
 
-
+@unauthenticated_user
 def register_user(request):
     form = CreateUserform()
     context = {}
@@ -51,17 +52,9 @@ def register_user(request):
     context["errors"] = errors
     return render(request, 'registrations/register.html', context)
 
-
+@unauthenticated_user
 def login_user(request):
     errors = []
-    subject = 'welcome to GFG world'
-    message = f'Hi , thank you for registering in geeksforgeeks.'
-    email_from = settings.EMAIL_HOST_USER
-    recipient_list = ["sandip.ingale@gmail.com", ]
-    #send_mail( subject, message, email_from, recipient_list )
-    if request.user.is_authenticated:
-        print("USer is already logged in")
-        return render(request, "home/home.html", {})
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         print(form)
@@ -70,21 +63,18 @@ def login_user(request):
             password = form.cleaned_data['password']
             user = authenticate(username=username, password=password)
             if user is not None:
-                print("Trying to log in the user")
                 login(request, user)
-                print("User logged in")
-                return render(request, "home/home.html", {})
+                request.session['groups'] = [x.name for x in request.user.groups.all()]
+                request.session.modified = True
+                return redirect('home')
             else:
                 print("Error ins logging in user")
         else:
-
-
             print("Error ins logging in")
     else:
         form = AuthenticationForm()
 
     e_list = json.loads(form.errors.as_json())
-    print(e_list)
     for fields in e_list:
         for er in e_list[fields]:
             errors.append(er["message"])

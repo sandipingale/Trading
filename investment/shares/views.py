@@ -15,10 +15,12 @@ import json
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/..")
 #from ..cal_returns.services.xirr import xirr
 from cal_returns.services.xirr import xirr
+from registrations.decorators import allowed_user
 
 # Create your views here.
 
 @login_required()
+@allowed_user(['shares_group'])
 def load_shares(request):
     f = symbols.split('\n')
     for lines in f:
@@ -32,6 +34,7 @@ def load_shares(request):
     return JsonResponse({'result':'Data loaded successfully'})
 
 @login_required()
+@allowed_user(['shares_group'])
 def shares_details(request,pk):
     share_list = Shares.objects.filter(user=request.user).filter(symbol=pk).order_by('txn_date')
     units = {}
@@ -77,6 +80,7 @@ def shares_details(request,pk):
 
 
 @login_required()
+@allowed_user(['shares_group'])
 def shares_home(request):
     share_list = Shares.objects.filter(user=request.user).values('symbol','txn_type','txn_date','share_price','logo').annotate(quantity=Sum('quantity'))
     investments = {}
@@ -111,6 +115,7 @@ def shares_home(request):
     return render(request, 'shares/shares_home.html',{'shares': share_list, 'returns': returns})
 
 @login_required()
+@allowed_user(['shares_group'])
 def add_shares(request):
     if request.method == 'POST':
         form = SharesForm(request.POST)
@@ -135,6 +140,7 @@ def add_shares(request):
         return render(request, 'shares/shares_form.html', {'form': form})
 
 @login_required()
+@allowed_user(['shares_group'])
 def update_share(request,pk):
     #print(pk)
     obj = get_object_or_404(Shares,id=pk)
