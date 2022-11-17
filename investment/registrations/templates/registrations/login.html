@@ -1,0 +1,50 @@
+{% extends 'home/base.html' %}
+ {% block title_block %}
+        <title>This is home page</title>
+    {% endblock title_block %}
+
+    {% block body_block %}
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+            <div{% if message.tags %} class="{{ message.tags }}"{% endif %}> {{ message }} </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="container">
+            <div class="row align-items-center mt-5">
+                <div class="col-10 col-md-5   mx-auto">
+                    <div class="card shadow border text-bg-info">
+                        <div class="card-header text-center">
+                            User Login
+                        </div>
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <div class="input-group mb-3">
+                              <span class="input-group-text btn btn-warning" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+                              <input type="text" class="form-control" name="username" maxlength="150" autofocus="" required="" id="id_username" placeholder="username">
+                            </div>
+                            <div class="input-group mb-3">
+                              <span class="input-group-text btn btn-warning" id="basic-addon5"><i class="fa-solid fa-key"></i></span>
+                                <input type="password" class="form-control" name="password" maxlength="150" autofocus="" required="" id="id_password" placeholder="Password">
+                            </div>
+                            <input type="submit" class="btn btn-sm btn-primary">
+                        </div>
+                        <div class="card-footer text-center">
+                            Dont have an acccount? <a href="{% url 'register' %}">Sign Up</a>
+                            <p>Forgot password? <a href="{% url 'password_reset' %}">Password Reset</a></p>
+                        </div>
+                        {% if errors %}
+                        {% for error in errors %}
+                        <div class="alert alert-danger" role="alert">{{ error }}</div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+   </form>
+
+
+    {% endblock body_block %}

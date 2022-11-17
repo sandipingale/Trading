@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from django.contrib.auth import views as auth_views
+from registrations import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('cal_returns.urls')),
@@ -23,5 +25,6 @@ urlpatterns = [
     path('', include('home.urls')),
     path('', include('shares.urls')),
     path('', include('savings.urls')),
-
+    path('accounts/',include("registrations.urls")),
+    path("", views.login_user, name="login"),
 ]
