@@ -162,6 +162,6 @@ def update_share(request,pk):
 @login_required()
 def get_share_list(request):
     query = request.GET.get('q')
-    symbol_list = ShareList.objects.filter(text__contains=query).values()
+    symbol_list = ShareList.objects.filter(text__icontains=query).values()
     #print(symbol_list)
     return JsonResponse({'results':list(symbol_list)},safe=False)
