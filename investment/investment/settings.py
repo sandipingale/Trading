@@ -78,20 +78,25 @@ WSGI_APPLICATION = 'investment.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+db_setting = None
 
-DATABASES = {
-    'default': {
+if os.environ.get('mysql_enabled', None):
+    db_setting =  {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': os.environ.get('mydbname'),
+    'USER': os.environ.get('mydbuser'),
+    'PASSWORD': os.environ.get('mydbpassword'),
+    'HOST': os.environ.get('mydbhost'),
+    'PORT': 3306,
+    }
+else:
+    db_setting = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
-#    'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'sandipingale$market',
-#         'USER': 'sandipingale',
-#         'PASSWORD': 'Mysql$1234',
-#         'HOST': 'sandipingale.mysql.pythonanywhere-services.com',
-#         'PORT': 3306,
-#    }
+    }
+
+DATABASES = {
+    'default': db_setting
 }
 
 
