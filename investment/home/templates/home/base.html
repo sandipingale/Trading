@@ -38,6 +38,11 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.inv-result {
+    color: red;
+    transition: all 10s ease ;
+}
 </style>
 
 </head>
@@ -153,11 +158,12 @@
 <script>
     document.getElementById("id_start_date").value = "2019-01-01";
     document.getElementById("id_end_date").value = new Date().toISOString().substr(0, 10);
-    document.getElementById("id_multiply").value = 1.4;
-    document.getElementById("id_moving_average").value = 10;
-    document.getElementById("id_no_of_shares").value = 10;
+    //document.getElementById("id_multiply").value = 1.4;
+    //document.getElementById("id_moving_average").value = 10;
+    //document.getElementById("id_no_of_shares").value = 10;
 </script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://kit.fontawesome.com/6f6b9d9e60.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/htmx.org@1.8.4"></script>
 </body>
 </html>

@@ -1,99 +1,119 @@
 {% extends "home/base.html" %}
-{% block title %}Investment Test{% endblock %}
+{% load static %}
+{% block title %}
+Investment Test
+
+{% endblock %}
 {% block body_block %}
 <div class="container">
-<form action="inv_return_test" method="post">
-    {% csrf_token %}
-    <div class="form-row">
-        <div class="form-group col-4 col-md-4 col-sm-6">
-            <label for="id_symbol_name">Symbol</label>
-            <select id="id_symbol_name" name="symbol_name" class="form-control" required >
-                <option value="" selected="">---------</option>
-            </select>
-        </div>
-        <div class="form-group col-4 col-md-4 col-sm-6">
-            <label for="id_no_of_shares">Shares</label>
-            {{ form.no_of_shares }}
-        </div>
-        <div class="form-group col-4 col-md-4 col-sm-6">
-            <label for="multiply">Multiply</label>
-            {{ form.multiply }}
-        </div>
-        <div class="form-group col-4 col-md-4 col-sm-6">
-            <label for="moving_average">MA</label>
-            {{ form.moving_average }}
-        </div>
-        <div class="form-group col-4 col-md-4 col-sm-6">
-            <label for="start_date">Start Date</label>
-            <input type="date" name="start_date" class="form-control" required="" id="id_start_date">
-        </div>
-        <div class="form-group col-4 col-md-4 col-sm-6">
-            <label for="end_date">End Date</label>
-            <input type="date" name="end_date" class="form-control" required="" id="id_end_date">
-        </div>
+    <form action="inv_return_test" 
+          method="post" 
+          hx-post="{% url 'inv_return_test' %}" 
+          hx-target="#inv-test-result"
+          hx-indicator="#indicator"
+          hx-swap="outerHTML">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-4 col-md-4 col-sm-4">
+                <label for="id_symbol_name">Symbol</label>
+                <select id="id_symbol_name" name="symbol_name" class="form-control" required >
+                    <option value="" selected="">---------</option>
+                </select>
+            </div>
+            <!--div class="form-group col-4 col-md-4 col-sm-6">
+                <label for="id_no_of_shares">Shares</label>
+                {{ form.no_of_shares }}
+            </div>
+            <div class="form-group col-4 col-md-4 col-sm-6">
+                <label for="multiply">Multiply</label>
+                {{ form.multiply }}
+            </div>
+            <div class="form-group col-4 col-md-4 col-sm-6">
+                <label for="moving_average">MA</label>
+                {{ form.moving_average }}
+            </div-->
+            <div class="form-group col-4 col-md-4 col-sm-4">
+                <label for="start_date">Start Date</label>
+                <input type="date" name="start_date" class="form-control" required="" id="id_start_date">
+            </div>
+            <div class="form-group col-4 col-md-4 col-sm-4">
+                <label for="end_date">End Date</label>
+                <input type="date" name="end_date" class="form-control" required="" id="id_end_date">
+            </div>
 
-        <div class="d-grid gap-4 col-1 mx-auto">
-            <button type="submit" class="btn btn-success">Submit</button>
+            <div class="d-grid gap-4 col-1 mx-auto">
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
         </div>
+    </form>
+    <!--div class="row justify-content-center">
+        <div class="loader" align="center"></div>
+    </div-->
+       <br> 
+    <div class="row justify-content-center">
+        <img id="indicator" class="htmx-indicator" src="{% static 'home/svg-loaders/circles.svg' %}"/>
     </div>
-</form>
-<div class="row justify-content-center">
-    <div class="loader" align="center"></div>
-</div>
-        <br><br>
+    <br><br>
+    
+        {% block inv-test-result %}
+        <div id="inv-test-result" class="inv-result">
         {% if xirr %}
             <div class="row justify-content-center">
-            <div class="card text-white bg-success mb-3 " style="max-width: 18rem;">
-                <div class="card-header">Investment Details and Returns</div>
-                <div class="card-body">
-                    <div class="alert alert-primary" role="alert">
-                        Investment Price - {{ inv_to_proceed|floatformat:2 }}
+                <div class="card text-white bg-success mb-3 " style="max-width: 18rem;">
+                    <div class="card-header">Investment Details and Returns</div>
+                    <div class="card-body">
+                        <div class="alert alert-primary" role="alert">
+                            Investment Price - {{ inv_to_proceed|floatformat:2 }}
+                        </div>
+                        <div class="alert alert-primary" role="alert">
+                            Returns (XIRR) - {{ xirr }}
+                        </div>
+                        <div class="alert alert-primary" role="alert">
+                            Total Investment  - {{ total_inv|floatformat:2 }}
+                        </div>
+                        <div class="alert alert-primary" role="alert">
+                            Total Returns  - {{ total_ret|floatformat:2 }}
+                        </div>
+                        <div class="alert alert-primary" role="alert">
+                            Abs Returns  - {{ abs_return|floatformat:2 }}
+                        </div>
                     </div>
-                    <div class="alert alert-primary" role="alert">
-                        Returns (XIRR) - {{ xirr }}
-                    </div>
-                    <!--div class="alert alert-primary" role="alert">
-                        Total Investment  - {{ total_inv|floatformat:2 }}
-                    </div>
-                    <div class="alert alert-primary" role="alert">
-                        Total Returns  - {{ total_ret|floatformat:2 }}
-                    </div>
-                    <div class="alert alert-primary" role="alert">
-                        Abs Returns  - {{ abs_return|floatformat:2 }}
-                    </div-->
                 </div>
-            </div>
             </div>
 
         {% endif %}
         <br><br><br>
         {% if data %}
-    <div class="table-responsive-sm">
-        <table class="table table-striped table-bordered table-sm" style="width:100%" id="example">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Close Price</th>
-                    <th>Moving Average</th>
-                    <th>No Of Shares</th>
-                    <th>Investment</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for date,price,ma,shares,investment in data %}
-                <tr>
-                    <td>{{ date|date:'Y-m-d' }}</td>
-                    <td>{{ price|floatformat:2 }}</td>
-                    <td>{{ ma|floatformat:2 }}</td>
-                    <td>{{ shares }}</td>
-                    <td>{{ investment|floatformat:2 }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+            <div class="table-responsive-sm">
+                <table class="table table-striped table-bordered table-sm" style="width:100%" id="example">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Close Price</th>
+                            <th>Moving Average</th>
+                            <th>No Of Shares</th>
+                            <th>Investment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for date,price,ma,shares,investment in data %}
+                        <tr>
+                            <td>{{ date|date:'Y-m-d' }}</td>
+                            <td>{{ price|floatformat:2 }}</td>
+                            <td>{{ ma|floatformat:2 }}</td>
+                            <td>{{ shares }}</td>
+                            <td>{{ investment|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
         {% endif %}
+    </div>
+        {% endblock %}
+    
+    
 </div>
 
 
