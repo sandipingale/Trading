@@ -138,7 +138,7 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 

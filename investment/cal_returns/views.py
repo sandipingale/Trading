@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, HttpResponse
 import sys
 from datetime import date
 from .forms import StockForm, InvStockForm, SectReturnForm
@@ -10,7 +10,7 @@ sys.path.append(os.path.abspath('.'))
 from shares.models import ShareList
 from django.contrib.auth.decorators import login_required
 from registrations.decorators import allowed_user
-
+from render_block import render_block_to_string
 
 
 @login_required()
@@ -37,6 +37,7 @@ def inv_return_test(request):
     if request.method == 'POST':
         form = InvStockForm(request.POST)
         if form.is_valid():
+
             symbol = form.cleaned_data['symbol_name']
             symbol_temp = ""
             if ShareList.objects.filter(id=symbol).exists():
@@ -44,31 +45,30 @@ def inv_return_test(request):
                 symbol_temp = symbol_obj.text
             elif ShareList.objects.filter(text=symbol).exists():
                 symbol_temp =  symbol
+
             symbol = symbol_temp
-            #symbol = form.cleaned_data['symbol_name']
-#           series = form.cleaned_data['series']
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
-            no_of_shares = form.cleaned_data['no_of_shares']
-            multiply = form.cleaned_data['multiply']
-            moving_average = form.cleaned_data['moving_average']
+            no_of_shares = 10 
+            multiply = 1.4 
+            moving_average = 10 
 
             data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, 'EQ', start_date, end_date,
                                                                           no_of_shares, multiply, moving_average)
             abs_ret = (tot_ret - tot_inv)/tot_inv * 100
-            return render(request, 'cal_returns/inv_return_test.html', {'form': form,
-                                                                        'data': data,
-                                                                        'xirr': xirr_value,
-                                                                        'inv_to_proceed': inv_to_proceed,
-                                                                        'total_inv': tot_inv,
-                                                                        'total_ret': tot_ret,
-                                                                        'abs_return': abs_ret})
+            html = render_block_to_string('cal_returns/inv_return_test.html', 'inv-test-result',{'form': form,
+                                                                                     'data': data,
+                                                                                     'xirr': xirr_value,
+                                                                                     'inv_to_proceed': inv_to_proceed,
+                                                                                     'total_inv': tot_inv,
+                                                                                     'total_ret': tot_ret,
+                                                                                     'abs_return': abs_ret})
+            return HttpResponse(html)
+
     else:
         form = InvStockForm()
         return render(request, 'cal_returns/inv_return_test.html', {'form': form})
 
-#def home(request):
-#    return render(request,'cal_returns/home.html')
 
 @login_required()
 @allowed_user(['shares_group'])
@@ -77,18 +77,17 @@ def sect_return(request):
         form = SectReturnForm(request.POST)
         if form.is_valid():
             sector = form.cleaned_data['sector']
-#            series = form.cleaned_data['series']
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
-            no_of_shares = form.cleaned_data['no_of_shares']
-            multiply = form.cleaned_data['multiply']
-            moving_average = form.cleaned_data['moving_average']
+            no_of_shares = 10 
+            multiply = 1.4 
+            moving_average = 10 
             symbols = []
             if sector == 'IT':
                 symbols = ['WIPRO.NS', 'TCS.NS', 'INFY.NS', 'TECHM.NS', 'NIITLTD.NS', 'HCLTECH.NS', 'TATAELXSI.NS', 'MINDTREE.NS', ]
             if sector == 'Auto':
                 symbols = ['ASHOKLEY.NS', 'HEROMOTOCO.NS', 'M&M.NS', 'APOLLOTYRE.NS', 'MRF.NS', 'BAJAJ-AUTO.NS', 'MARUTI.NS', 'EICHERMOT.NS',
-                           'MOTHERSUMI.NS', 'TVSMOTOR.NS', 'TATAMOTORS.NS', 'BOSCHLTD.NS', 'EXIDEIND.NS', 'AMARAJABAT.NS', 'BHARATFORG.NS']
+                           'TVSMOTOR.NS', 'TATAMOTORS.NS', 'BOSCHLTD.NS', 'EXIDEIND.NS', 'AMARAJABAT.NS', 'BHARATFORG.NS']
             if sector == 'Bank':
                 symbols = ['IDFCFIRSTB.NS', 'INDUSINDBK.NS', 'YESBANK.NS', 'SBIN.NS', 'AXISBANK.NS', 'PNB.NS', 'HDFCBANK.NS', 'BANKBARODA.NS',
                            'RBLBANK.NS', 'ICICIBANK.NS', 'KOTAKBANK.NS', 'FEDERALBNK.NS']
@@ -155,12 +154,14 @@ def sect_return(request):
                 data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, 'EQ', start_date, end_date,
                                                                               no_of_shares, multiply, moving_average)
                 sect_ret_results.append((symbol, xirr_value, inv_to_proceed, data[-1][0], data[-1][1]))
-            return render(request, 'cal_returns/sect_return.html', {'form': form,
+            html =  render_block_to_string('cal_returns/sect_return.html', 'sec_return_result', {'form': form,
                                                                     'data': sect_ret_results,
                                                                     })
+            return HttpResponse(html)
     else:
         form = SectReturnForm()
         return render(request, 'cal_returns/sect_return.html', {'form': form})
+
 @login_required()
 def get_json_inv_test(request):
     symbol = request.GET.get("symbol", None)
@@ -168,7 +169,7 @@ def get_json_inv_test(request):
         symbol = symbol
     else:
         symbol = 'NIFTYBEES.NS'
-    #print(symbol)
+
     data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, 'EQ', '2019-01-01', '2021-08-10',
                                                                       10, 1.4, 10)
     response = JsonResponse({'symbol':  symbol,
