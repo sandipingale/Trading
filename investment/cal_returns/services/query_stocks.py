@@ -120,9 +120,16 @@ def new_inv_test(symbol='symbol', series='series', start_date=date.today(), end_
     inv_result = []
     total_inv_amount = 0
     total_return_amount = 0
+    increamental_inv = 0
+    total_no_of_shares = 0
     for inv_date, inv_amount in inv_list:
         tmp_date = get_date(inv_date)
-        inv_result.append((inv_date, price_dict[tmp_date], ma_dict[tmp_date], no_of_shares, inv_amount))
+        increamental_inv = increamental_inv + inv_amount*-1
+        if inv_amount < 0:
+            total_no_of_shares = total_no_of_shares + no_of_shares
+        profit = total_no_of_shares * price_dict[tmp_date]
+        #inv_result.append((inv_date, price_dict[tmp_date], ma_dict[tmp_date], no_of_shares, inv_amount))
+        inv_result.append((inv_date, increamental_inv, profit, price_dict[tmp_date], inv_amount))
         if inv_amount < 0:
             total_inv_amount = total_inv_amount + inv_amount * -1
         else:

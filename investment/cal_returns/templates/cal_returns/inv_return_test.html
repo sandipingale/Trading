@@ -5,13 +5,13 @@ Investment Test
 
 {% endblock %}
 {% block body_block %}
-<div class="container">
+<div class="container" >
     <form action="inv_return_test" 
           method="post" 
           hx-post="{% url 'inv_return_test' %}" 
           hx-target="#inv-test-result"
           hx-indicator="#indicator"
-          hx-swap="outerHTML">
+          hx-swap="outerHTML swap:1s">
         {% csrf_token %}
         <div class="form-row">
             <div class="form-group col-4 col-md-4 col-sm-4">
@@ -60,7 +60,7 @@ Investment Test
         {% if xirr %}
             <div class="row justify-content-center">
                 <div class="card text-white bg-success mb-3 " style="max-width: 18rem;">
-                    <div class="card-header">Investment Details and Returns</div>
+                    <div class="card-header" id="id-card-header" >Investment Details and Returns</div>
                     <div class="card-body">
                         <div class="alert alert-primary" role="alert">
                             Investment Price - {{ inv_to_proceed|floatformat:2 }}
