@@ -82,6 +82,31 @@ def get_results(symbol='symbol', series='series', start_date=date.today(), end_d
 #            total_return_amount = inv_amount
 #    return inv_result, "{:.2%}".format(xirr(inv_list)), inv_to_proceed, total_inv_amount, total_return_amount
 
+def get_inv_resut_with_pd(symbol='symbol', series='EQ', start_date=date.today(), end_date=date.today(), no_of_shares=10,
+                 multiply_fact=1.4, moving_average=10):
+    symbol = yf.Ticker(symbol)
+    df = symbol.history(start=start_date, end=end_date)
+    df['MA'] = df['Close'].rolling(window=moving_average).mean()  
+    df['avg_diff'] = (df['Close'] - df['MA']) / df['MA'] * 100
+    
+    aver_diff_per = df.loc[df['avg_diff'] < 0, 'avg_diff'].mean()
+    inv_df = df.loc[df['avg_diff'] <aver_diff_per*multiply_fact].copy(deep=True)
+    
+    inv_price_series = inv_df['Close']*no_of_shares
+    inv_date_series = inv_df.index
+    
+    total_investment = inv_price_series.sum()
+    inv_to_proceed = df.iloc[-1,3] + (df.iloc[-1,3]*aver_diff_per*multiply_fact/100)
+    
+    inv_price_list = list(inv_price_series*-1)
+    inv_date_list = list(inv_date_series)
+    inv_price_list.append(df.iloc[-1,3]*len(inv_price_list)*no_of_shares)
+    inv_date_list.append(df.index[-1])
+    
+    total_returns = inv_price_list[-1]
+    xirr_returns = xirr(list(zip(inv_date_list,inv_price_list)))
+    
+    return inv_df,"{:.2%}".format(xirr_returns),inv_to_proceed, total_investment, total_returns
 
 def new_inv_test(symbol='symbol', series='series', start_date=date.today(), end_date=date.today(), no_of_shares=10,
                  multiply_fact=1.4, moving_average=10):
@@ -144,5 +169,5 @@ if __name__ == '__main__':
     s_date = date(2021, 1, 1)
     e_date = date(2021, 8, 8)
     result, per, pos_inv, amount_invested, amount_returned = new_inv_test('INFY.NS', 'EQ', s_date, e_date, 2, 1.8)
-    print(result)
-    print(per,pos_inv)
+    #print(result)
+    print(per,pos_inv,amount_invested,amount_returned)

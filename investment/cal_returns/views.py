@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 import sys
-from datetime import date
+from datetime import date, datetime
 from .forms import StockForm, InvStockForm, SectReturnForm
 from .services.query_stocks import  new_inv_test,get_results
 from django.http import JsonResponse
@@ -56,13 +56,22 @@ def inv_return_test(request):
             data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, 'EQ', start_date, end_date,
                                                                           no_of_shares, multiply, moving_average)
             abs_ret = (tot_ret - tot_inv)/tot_inv * 100
+            date_list = [datetime(year=x[0].year, month=x[0].month, day=x[0].day).timestamp() for x in data]
+            price_list = [round(x[1],2) for x in data]
+            price_list[-1] = price_list[-2]
+            price1_list = [round(x[2],2) for x in data]
+            msg = f"{price_list[-1]} invested would have given {price1_list[-1]}"
             html = render_block_to_string('cal_returns/inv_return_test.html', 'inv-test-result',{'form': form,
                                                                                      'data': data,
                                                                                      'xirr': xirr_value,
                                                                                      'inv_to_proceed': inv_to_proceed,
                                                                                      'total_inv': tot_inv,
                                                                                      'total_ret': tot_ret,
-                                                                                     'abs_return': abs_ret})
+                                                                                     'abs_return': abs_ret,
+                                                                                     'date_list': date_list,
+                                                                                     'price_list': price_list,
+                                                                                     'price1_list': price1_list,
+                                                                                     'msg':msg})
             return HttpResponse(html)
 
     else:
