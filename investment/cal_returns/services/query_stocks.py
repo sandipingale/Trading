@@ -132,14 +132,15 @@ def new_inv_test(symbol='symbol', series='series', start_date=date.today(), end_
     for tmp_dt in inv_list:
         pass
         #print(type(tmp_dt[0]),tmp_dt[0],tmp_dt[1])
+    #print(inv_list)
     price_dict = {}
     ma_dict = {}
     for index, row in df.iterrows():
-        price_dict[row['Date']] = row['Close']
-        ma_dict[row['Date']] = row['MA']
-    price_dict[last_rec['Date']] = last_rec['Close']
+        price_dict[row['just_date']] = row['Close']
+        ma_dict[row['just_date']] = row['MA']
+    price_dict[last_rec['just_date']] = last_rec['Close']
 
-    if last_rec['Date'] not in ma_dict:
+    if last_rec['just_date'] not in ma_dict:
         ma_dict[last_rec] = 0
 
     inv_result = []
@@ -147,8 +148,10 @@ def new_inv_test(symbol='symbol', series='series', start_date=date.today(), end_
     total_return_amount = 0
     increamental_inv = 0
     total_no_of_shares = 0
+    #print(price_dict)
     for inv_date, inv_amount in inv_list:
         tmp_date = get_date(inv_date)
+        tmp_date = inv_date
         increamental_inv = increamental_inv + inv_amount*-1
         if inv_amount < 0:
             total_no_of_shares = total_no_of_shares + no_of_shares

@@ -33,6 +33,7 @@ def stock_details(request):
         return render(request, 'cal_returns/stock_details.html', {'form': form})
 
 @login_required()
+@allowed_user(['test_group'])
 def inv_return_test(request):
     if request.method == 'POST':
         form = InvStockForm(request.POST)
@@ -52,16 +53,17 @@ def inv_return_test(request):
             no_of_shares = 10 
             multiply = 1.4 
             moving_average = 10 
+            moving_average = int(form.cleaned_data['risk_ape'])
 
             data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, 'EQ', start_date, end_date,
                                                                           no_of_shares, multiply, moving_average)
             abs_ret = (tot_ret - tot_inv)/tot_inv * 100
-            date_list = [datetime(year=x[0].year, month=x[0].month, day=x[0].day).timestamp() for x in data]
+            date_list = [datetime(year=x[0].year, month=x[0].month, day=x[0].day).timestamp()*1000+86400000 for x in data]
             price_list = [round(x[1],2) for x in data]
             price_list[-1] = price_list[-2]
             price1_list = [round(x[2],2) for x in data]
             msg = f"{price_list[-1]} invested would have given {price1_list[-1]}"
-            html = render_block_to_string('cal_returns/inv_return_test.html', 'inv-test-result',{'form': form,
+            html = render_block_to_string('cal_returns/inv_return_test_par.html', 'inv-test-result',{'form': form,
                                                                                      'data': data,
                                                                                      'xirr': xirr_value,
                                                                                      'inv_to_proceed': inv_to_proceed,
@@ -76,7 +78,7 @@ def inv_return_test(request):
 
     else:
         form = InvStockForm()
-        return render(request, 'cal_returns/inv_return_test.html', {'form': form})
+        return render(request, 'cal_returns/inv_return_test_par.html', {'form': form})
 
 
 @login_required()

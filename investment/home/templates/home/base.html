@@ -94,8 +94,8 @@
                     <a class="navbar-item" href="{% url 'home' %}">Insurance</a>
                 {% endif %}
 
-                {% if 'shares_group' in request.session.groups %}
-                    <a class="navbar-item" href="{% url 'inv_return_test' %}">Investment Test</a>
+                {% if 'test_group' in request.session.groups %}
+                    <a class="navbar-item" href="" hx-get="{% url 'inv_return_test' %}" hx-target="#container-id">Investment Test</a>
                 {% endif %}
 
                 {% if 'shares_group' in request.session.groups %}
@@ -109,7 +109,7 @@
             <div class="navbar-item">
               <div class="buttons">
                 {% if user.is_authenticated %}
-                    <a class="button is-small is-danger is-light" href="{% url 'logout' %}">
+                    <a class="button is-small is-danger is-light is-rounded" href="{% url 'logout' %}">
                         <strong>Logout</strong>
                     </a>
                 {% else %}
