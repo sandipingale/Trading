@@ -1,9 +1,4 @@
-{% extends "home/base.html" %}
 {% load static %}
-{% block title %}
-Investment Test
-
-{% endblock %}
 {% block body_block %}
 <div class="container is-fluid" >
     <form action="inv_return_test" 
@@ -407,6 +402,9 @@ document.body.addEventListener('htmx:afterSettle', function(evt) {
     } );
 });
 
+
+    document.getElementById("id_start_date").value = "2019-01-01";
+    document.getElementById("id_end_date").value = new Date().toISOString().substr(0, 10);
 
 </script>
 {% endblock %}

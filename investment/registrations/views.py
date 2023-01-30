@@ -14,7 +14,7 @@ import json
 from django.conf import settings
 from django.core.mail import send_mail
 from .token import account_activation_token
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.contrib import messages
 from .decorators import unauthenticated_user
 
@@ -67,6 +67,9 @@ def login_user(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(username=username, password=password)
+            if user is not None and user.is_active:
+                logout(request)
+                #login(request, user)
             if user is not None:
                 login(request, user)
                 request.session['groups'] = [x.name for x in request.user.groups.all()]
