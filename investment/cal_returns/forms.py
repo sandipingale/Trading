@@ -10,11 +10,15 @@ class StockForm(forms.Form):
 
 
 class InvStockForm(forms.Form):
+    risk_options = ((10, 'Low'),
+                    (20, 'Medium'),
+                    (50, 'High'))
     symbol_name = forms.CharField(label='Symbol',
                                   max_length=20,
                                   widget=forms.TextInput(attrs={'class':'form-control'}))
     start_date = forms.DateField(widget=forms.TextInput(attrs={'class':'form-control'}))
     end_date = forms.DateField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    risk_ape = forms.CharField(label="Risk Appetite", widget=forms.Select(choices=risk_options))
 
 
 

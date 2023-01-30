@@ -4,47 +4,101 @@
     {% endblock title_block %}
 
     {% block body_block %}
-    <div class="container">
-        {% if messages %}
-            {% for message in messages %}
-            <div{% if message.tags %} class="{{ message.tags }}"{% endif %}> {{ message }} </div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    <form method="POST" action="">
-        {% csrf_token %}
-        <div class="container">
-            <div class="row align-items-center mt-5">
-                <div class="col-10 col-md-5   mx-auto">
-                    <div class="card shadow border text-bg-info">
-                        <div class="card-header text-center">
-                            User Login
-                        </div>
-                        <div class="card-body d-flex flex-column align-items-center">
-                            <div class="input-group mb-3">
-                              <span class="input-group-text btn btn-warning" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
-                              <input type="text" class="form-control" name="username" maxlength="150" autofocus="" required="" id="id_username" placeholder="username">
-                            </div>
-                            <div class="input-group mb-3">
-                              <span class="input-group-text btn btn-warning" id="basic-addon5"><i class="fa-solid fa-key"></i></span>
-                                <input type="password" class="form-control" name="password" maxlength="150" autofocus="" required="" id="id_password" placeholder="Password">
-                            </div>
-                            <input type="submit" class="btn btn-sm btn-primary">
-                        </div>
-                        <div class="card-footer text-center">
-                            Dont have an acccount? <a href="{% url 'register' %}">Sign Up</a>
-                            <p>Forgot password? <a href="{% url 'password_reset' %}">Password Reset</a></p>
-                        </div>
-                        {% if errors %}
-                        {% for error in errors %}
-                        <div class="alert alert-danger" role="alert">{{ error }}</div>
-                        {% endfor %}
-                        {% endif %}
-                    </div>
+    <section class="section">
+        
+            {% if messages %}
+            <div class="box">
+                {% for message in messages %}
+                    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}> {{ message }} </div>
+                    {% endfor %}
                 </div>
-            </div>
-        </div>
-   </form>
+            {% endif %}
+        
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="container ">
+                    <div class="columns">
+                        <div class="column is-4 is-offset-4">
+                            <div class="card has-text-centered">
+                                <header class="card-header has-background-link">
 
+                                        <p class="card-header-title is-centered has-text-white">
+                                            User Login
+                                        </p>
+
+                                </header>
+                                <div class="card-content">
+                                    <div class="field">
+                                        <p class="control has-icons-left has-icons-right">
+                                          
+                                          <input type="text" class="input" name="username" maxlength="150" autofocus="" required="" id="id_username" placeholder="username">
+                                          <span class="icon is-small is-left">
+                                            <i class="fa-solid fa-user"></i>
+                                          </span>
+                                        </p>
+                                      </div>
+                                      <div class="field">
+                                        <p class="control has-icons-left">
+                                          
+                                          <input type="password" class="input" name="password" maxlength="150" autofocus="" required="" id="id_password" placeholder="Password">
+                                          <span class="icon is-small is-left">
+                                            <i class="fas fa-lock"></i>
+                                          </span>
+                                        </p>
+                                      </div>
+                                      <input type="submit" class="button is-link is-outlined is-centered is-small">
+                                      <p>Dont have an acccount? <a href="{% url 'register' %}">Sign Up</a></p>
+                                      <p>Forgot password? <a href="{% url 'password_reset' %}">Password Reset</a></p>
+                                </div>
+                                <footer class="card-footer has-background-link-light">
+
+                                    {% if errors %}
+                                    <article class="message is-danger">
+                                        <div class="message-body">
+                                            {% for error in errors %}
+                                            <div class="alert alert-danger" role="alert">{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                    </article>
+                                    {% endif %}
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--div class="row align-items-center mt-5">
+                        <div class="col-10 col-md-5   mx-auto">
+                            <div class="card shadow border text-bg-info">
+                                <div class="card-header text-center">
+                                    User Login
+                                </div>
+                                <div class="card-body d-flex flex-column align-items-center">
+                                    <div class="input-group mb-3">
+                                    <span class="input-group-text btn btn-warning" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+                                    <input type="text" class="form-control" name="username" maxlength="150" autofocus="" required="" id="id_username" placeholder="username">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                    <span class="input-group-text btn btn-warning" id="basic-addon5"><i class="fa-solid fa-key"></i></span>
+                                        <input type="password" class="form-control" name="password" maxlength="150" autofocus="" required="" id="id_password" placeholder="Password">
+                                    </div>
+                                    <input type="submit" class="btn btn-sm btn-primary">
+                                </div>
+                                <div class="card-footer text-center">
+                                    Dont have an acccount? <a href="{% url 'register' %}">Sign Up</a>
+                                    <p>Forgot password? <a href="{% url 'password_reset' %}">Password Reset</a></p>
+                                </div>
+                                {% if errors %}
+                                {% for error in errors %}
+                                <div class="alert alert-danger" role="alert">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div-->
+
+            </div>
+        </form>
+    </section>
 
     {% endblock body_block %}

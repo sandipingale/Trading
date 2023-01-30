@@ -3,10 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="9de2e7b3-c582-440a-9d14-315e26c0ddfa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investment/cal_returns/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/investment/cal_returns/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investment/cal_returns/services/query_stocks.py" beforeDir="false" afterPath="$PROJECT_DIR$/investment/cal_returns/services/query_stocks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investment/cal_returns/templates/cal_returns/inv_return_test.html" beforeDir="false" afterPath="$PROJECT_DIR$/investment/cal_returns/templates/cal_returns/inv_return_test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/investment/cal_returns/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/investment/cal_returns/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/investment/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/investment/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investment/shares/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/investment/shares/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investment/home/static/home/svg-loaders/circles.svg" beforeDir="false" afterPath="$PROJECT_DIR$/investment/home/static/home/svg-loaders/circles.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investment/home/templates/home/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/investment/home/templates/home/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investment/investment/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/investment/investment/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investment/registrations/templates/registrations/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/investment/registrations/templates/registrations/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investment/static/home/svg-loaders/circles.svg" beforeDir="false" afterPath="$PROJECT_DIR$/investment/static/home/svg-loaders/circles.svg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +76,7 @@
     </option>
   </component>
   <component name="SvnConfiguration">
-    <configuration />
+    <configuration>C:\Users\lenovo\AppData\Roaming\Subversion</configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -152,37 +157,9 @@
     <option name="LAST_COMMIT_MESSAGE" value="Updates from yfinance" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="525" y="216" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1628428979515">
+    <state x="578" y="330" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1674311274719">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="525" y="216" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1628428979515" />
-    <state x="307" y="8" key="CommitChangelistDialog2" timestamp="1629563467615">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="307" y="8" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1629563467615" />
-    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1629101904617">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1629101904617" />
-    <state x="277" y="56" key="SettingsEditor" timestamp="1628424659489">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="277" y="56" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1628424659489" />
-    <state x="93" y="93" width="1350" height="638" key="ShowDiffWithBranchDialog" timestamp="1629101904617">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="93" y="93" width="1350" height="638" key="ShowDiffWithBranchDialog/0.0.1536.824@0.0.1536.824" timestamp="1629101904617" />
-    <state x="361" y="146" key="Vcs.Push.Dialog.v2" timestamp="1629563480027">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="361" y="146" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1629563480027" />
-    <state x="465" y="238" key="com.intellij.ide.util.TipDialog" timestamp="1629820189564">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="465" y="238" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1629820189564" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1628522489472">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1628522489472" />
+    <state x="578" y="330" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1674311274719" />
   </component>
 </project>
