@@ -122,9 +122,9 @@ def new_inv_test(symbol='symbol', series='series', start_date=date.today(), end_
     last_rec = last_rec[0]
     chart_list = df[['just_date','avg_diff']]
     #print(chart_list)
-    inv_to_proceed = last_rec['Close'] + (last_rec['Close'] * df[df['avg_diff'] < 0].mean(axis=0)['avg_diff'] *
+    inv_to_proceed = last_rec['Close'] + (last_rec['Close'] * df[df['avg_diff'] < 0].mean(axis=0,numeric_only=True)['avg_diff'] *
                                         multiply_fact / 100)
-    inv = df[df['avg_diff'] < df[df['avg_diff'] < 0].mean(axis=0)['avg_diff'] * multiply_fact]
+    inv = df[df['avg_diff'] < df[df['avg_diff'] < 0].mean(axis=0,numeric_only=True)['avg_diff'] * multiply_fact]
     inv_list = list(inv[['just_date', 'inv_value']].to_records(index=False))
     shares = len(inv_list) * no_of_shares
 
