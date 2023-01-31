@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 from django.contrib.messages import constants as messages
 import os
+import socket
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,7 +24,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '02@5s+p)0h78x5-t=^jd8(g++bhtzwn2+1*ll$qvmq@u@!lc9c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+dev_hosts = ['LAPTOP-KKGR1GA4']
+if socket.gethostname() in dev_hosts:
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = ['sandipingale.pythonanywhere.com','127.0.0.1','tradeandinvest.in', 'tradeandinvest.co.in']
 

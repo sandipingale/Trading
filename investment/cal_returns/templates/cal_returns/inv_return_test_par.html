@@ -1,6 +1,6 @@
 {% load static %}
 {% block body_block %}
-<div class="container is-fluid" >
+<div class="container is-fluid">
     <form action="inv_return_test" 
           method="post" 
           hx-post="{% url 'inv_return_test' %}" 
@@ -117,10 +117,11 @@
         {% block inv-test-result %}
 
         <div id="inv-test-result" class="inv-result">
+          {% if xirr %}
           <div style="display: none" id="priceData" data-json="{{ price_list|safe }}"></div>
           <div style="display: none" id="price1Data" data-json="{{ price1_list|safe }}"></div>
           <div style="display: none" id="dateData" data-json="{{ date_list }}"></div>
-        {% if xirr %}
+       
      
         <nav class="level is-mobile is-hidden-desktop">
             <div class="level-item has-text-centered">
@@ -335,7 +336,7 @@ ajax: {
       };
     },
     processResults: function (data, params) {
-    console.log(data);
+    //console.log(data);
     return {
         results: data.results,
         pagination: {
@@ -355,7 +356,11 @@ ajax: {
 
 function draw_chart(){
 // For graph
-console.log(typeof(loadJson('#priceData')))
+//console.log(document.querySelector('#priceData'))
+if (!document.querySelector('#priceData')){
+  return;
+}
+//console.log(typeof(loadJson('#priceData')))
   var options = {
     chart: {
       type: 'line'
@@ -386,19 +391,20 @@ console.log(typeof(loadJson('#priceData')))
     }
   }
 
+  //console.log(document.querySelector("#chart"))
   var chart = new ApexCharts(document.querySelector("#chart"), options);
 
   chart.render()
 }
 //draw_chart()
 document.body.addEventListener('htmx:afterSettle', function(evt) {
-  console.log("I am calling the function")
+  //console.log("I am calling the function")
   draw_chart(); // add a new parameter into the mix
   $('#example').DataTable( {
-        //dom: 'Blfrtip',
-       // buttons: [
-       //     'copy', 'csv', 'excel', 'pdf', 'print'
-       // ]
+        dom: 'Blfrtip',
+        buttons: [
+            'copy' //, 'csv', 'excel', 'pdf', 'print'
+       ]
     } );
 });
 
