@@ -62,7 +62,7 @@ def login_user(request):
     errors = []
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
-        print(form)
+        #print(form)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
@@ -96,7 +96,7 @@ def logout_user(request):
 def activate(request, uidb64, token):
     User = get_user_model()
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
