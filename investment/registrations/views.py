@@ -62,8 +62,17 @@ def register_user(request):
 def login_user(request):
     errors = []
     if request.method == "POST":
+        print(request.POST.get('username'))
+        if '@' in request.POST.get('username'):
+            tmp_email = request.POST.get('username')
+            check_user_on_email = User.objects.filter(email=tmp_email)
+            if check_user_on_email:
+                username = check_user_on_email[0].username
+                request.POST._mutable=True
+                request.POST['username'] = username
+                request.POST._mutable=False
         form = AuthenticationForm(request, data=request.POST)
-        #print(form)
+        
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
@@ -77,9 +86,9 @@ def login_user(request):
                 request.session.modified = True
                 return redirect('home')
             else:
-                print("Error ins logging in user")
+                print("Error in logging in user")
         else:
-            print("Error ins logging in")
+            print("Erro ins logging in")
     else:
         form = AuthenticationForm()
 
