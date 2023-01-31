@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '02@5s+p)0h78x5-t=^jd8(g++bhtzwn2+1*ll$qvmq@u@!lc9c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-dev_hosts = ['LAPTOP-KKGR1GA4']
+dev_hosts = ['LAPTOP-KKGR1GA4', 'DESKTOP-ASB2BC0']
 if socket.gethostname() in dev_hosts:
     DEBUG = True
 else:
@@ -153,7 +153,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'tradeandinvest.adm@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ['gmail_password']
+EMAIL_HOST_PASSWORD = os.environ.get('gmail_password')
 
 # For bootstrap
 MESSAGE_TAGS = {
