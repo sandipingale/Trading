@@ -111,6 +111,7 @@ def shares_home(request):
         #print(investments[share])
         returns[share]['returns'] = xirr(investments[share])*100
         returns[share]['logo'] = logos[share]
+        returns[share]['current_val'] = investments[share][-1][1]
 
     return render(request, 'shares/shares_home.html',{'shares': share_list, 'returns': returns})
 

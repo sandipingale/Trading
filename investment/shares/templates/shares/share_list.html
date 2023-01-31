@@ -1,125 +1,140 @@
 {% extends 'home/base.html' %}
 {% block body_block %}
-<div class="container">
-    <div class="alert alert-success" role="alert">
-        <div class="row">
-            <div class="col-sm-2">
-                <a href="{% url 'shares' %}"><i class="bi bi-arrow-left-square" style="font-size: 1rem;"></i></a>
+
+<section> <!-- Section Start-->
+    <div class="container"> <!-- Container Start-->
+        <div class="columns is-multiline"> <!-- Columns start-->
+            <div class="column is-2">
+                    <div class="box">
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <strong>Units</strong>
+                                    <br>
+                                    {{ units|floatformat:0 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
             </div>
-            <div class="col-sm-8">
-                <div class="text-center">
-                    {{ symbol }}
+
+            <div class="column is-2">
+                <div class="box">
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>Investment</strong>
+                                <br>
+                                {{total_inv|floatformat:2}}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-
-    </div>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-6">
-        <div class="col mb-4">
-            <div class="card shadow border-success">
-                <div class="card-body">
-                    <h5 class="card-title">Units</h5>
-                    <p class="card-text">{{ units|floatformat:0 }}</p>
+            <div class="column is-2">
+                <div class="box">
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>Returns</strong>
+                                <br>
+                                {% if xirr > 0 %}
+                                <i class="fa-regular fa-circle-up has-text-success"></i>
+                                {% else %}
+                                <i class="fa-regular fa-circle-down has-text-danger"></i>
+                                {% endif %}
+                                {{ xirr|floatformat:2 }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card shadow border-success">
-                <div class="card-body">
-                    <h5 class="card-title">Investment</h5>
-                    <p class="card-text">{{total_inv|floatformat:2}}</p>
+
+            <div class="column is-2">
+                <div class="box">
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>Last Price</strong>
+                                <br>
+                                {{last_price|floatformat:2}}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card shadow border-success">
-                <div class="card-body">
-                    <h5 class="card-title">Returns</h5>
-                    <p class="card-text">
-                        {% if xirr > 0 %}
-                        <i class="bi bi-arrow-up-circle-fill" style="color:green"></i>
-                        {% else %}
-                        <i class="bi bi-arrow-down-circle-fill" style="color:red"></i>
-                        {% endif %}
-                        {{ xirr|floatformat:2 }}
-                    </p>
+
+            <div class="column is-2">
+                <div class="box">
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>Avg price</strong>
+                                <br>
+                                {{ avg_price|floatformat:2 }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card shadow border-success">
-                <div class="card-body">
-                    <h5 class="card-title">Last Price</h5>
-                    <p class="card-text">{{last_price|floatformat:2}}</p>
+
+            
+            <div class="column is-2">
+                <div class="box">
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>Dividend</strong>
+                                <br>
+                                {{ div }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card shadow border-success">
-                <div class="card-body">
-                    <h5 class="card-title">Avg price</h5>
-                    <p class="card-text">{{ avg_price|floatformat:2 }}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col mb-4">
-            <div class="card shadow border-success">
-                <div class="card-body">
-                    <h5 class="card-title">Dividend</h5>
-                    <p class="card-text">{{ div }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
+        </div> <!-- Columns end-->
 
-
-
-
-
-
-    <div class="table-responsive">
-        <table class="table table-sm table-hover table-striped table-bordered">
-            <thead class="thead-light">
-            <tr>
-
-                <th scope="col">Date</th>
-                <th scope="col">Units</th>
-                <th scope="col">Type</th>
-                <th scope="col">Txn Price</th>
-                <th></th>
-
-            </tr>
+        <!-- Table Start-->
+        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Units</th>
+                    <th>Type</th>
+                    <th>Txn Price</th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
-            {% for share in shares %}
-            <tr>
-
-                <td>
-                    <a  href="{% url 'update_share' share.id %}">
-                        <i class="bi bi-pencil-square" style="color:green"></i>
-                    </a>
-                     {{ share.txn_date|date:'m/d/Y' }}
-                </td>
-                <td>{{ share.quantity|floatformat:0 }}</td>
-                <td>{{ share.txn_type }}</td>
-                <td>
-                    {{ share.share_price }}
-
-                </td>
-                <td style="text-align:center">
-                    <a  href="{% url 'update_share' share.id %}" style="text-align:right">
-                        <i class="bi bi-trash-fill" style="color:red"></i>
-                    </a>
-                </td>
-
-            </tr>
-
-            {% endfor %}
+                {% for share in shares %}
+                <tr>
+                    <td>
+                        <a  href="{% url 'update_share' share.id %}">
+                            <i class="fa-solid fa-pen has-text-success is-size-7"></i>
+                        </a>
+                         {{ share.txn_date|date:'m/d/Y' }}
+                    </td>
+                    <td>{{ share.quantity|floatformat:0 }}</td>
+                    <td>{{ share.txn_type }}</td>
+                    <td>
+                        {{ share.share_price }}
+    
+                    </td>
+                    <td style="text-align:center">
+                        <a  href="{% url 'update_share' share.id %}" style="text-align:right">
+                            <i class="fa-solid fa-trash has-text-danger is-size-7"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
-    </div>
+        <!-- Table End-->
+    </div> <!-- Container End-->
+</section> <!-- Section End-->
 
-</div>
+
+
 {% endblock %}

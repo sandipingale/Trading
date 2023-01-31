@@ -1,51 +1,89 @@
 {% extends 'home/base.html' %}
 {% block body_block %}
-<div class="container-sm">
 
-    <div class="text-right">
-        <a class="btn btn-outline-success" href="{% url 'add_shares' %}">
-             <i class="bi bi-plus-circle"></i>
-        </a>
-    </div>
-    <br>
+<section>
 
-    <div class="table-responsive">
-        <table class="table table-sm table-hover table-striped table-bordered">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Symbol</th>
-                    <th scope="col">Units</th>
-                    <th scope="col">Gain</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for symbol,value in returns.items %}
+        <div class="container">
+            <div class="block has-text-right">
+                <a href="" class=""><i class="fa-solid fa-cart-shopping"></i></a>
+            </div>
+            <div class="columns is-multiline block">
+                {% for symbol,value in returns.items %}
+                <div class="column is-3 ">
+
+                    <div class="box">
+                        <article class="media">
+                          <div class="media-left">
+                            <figure class="image is-64x64">
+                              <img src="{{ value.logo }}" alt="Image">
+                            </figure>
+                          </div>
+                          <div class="media-content">
+                            <div class="content">
+                              <p>
+                                <strong>{{ symbol }}</strong>
+                                <br>
+                                
+                                <nav class="level is-mobile">
+                                    <div class="level-left">
+                                        <div class="level-item has-text-centered">
+                                            <div>
+                                                <p class="heading is-size-7">Units</p>
+                                                <p class="title is-size-6">{{ value.units|floatformat:0}} </p>
+                                            </div>
+                                        </div>
+                                        <div class="level-item has-text-centered">
+                                            <div>
+                                                <p class="heading is-size-7">Current Value</p>
+                                                <p class="title is-size-6">{{ value.current_val |floatformat:2}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="level-item has-text-centered">
+                                            <div>
+                                                <p class="heading is-size-7">Gain</p>
+                                                {% if value.returns < 0 %}
+                                                    <p class="title is-size-6 has-text-danger">{{ value.returns|floatformat:2}}</p>
+                                                {% else %}
+                                                    <p class="title is-size-6 has-text-success">{{ value.returns|floatformat:2}}</p>
+                                                {% endif %}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nav>
 
 
-                 <tr>
-                    <td>
-                        <a href="{% url 'share_details' symbol %}">
-                            <i class="bi bi-arrow-up-right-circle-fill" style="color:green"></i>
-                        </a>
-                        <img src="{{ value.logo }}" width="40" style="border-radius:50%"/>
-                        {{ symbol }}
-                    </td>
-                    <td>{{ value.units|floatformat:0 }}</td>
+                              </p>
+                            </div>
+                            <nav class="level is-mobile">
+                              <div class="level-left">
+                                <a class="level-item" aria-label="reply" href="{% url 'share_details'  symbol %}">
+                                  <span class="icon is-small">
+                                    <i class="fas fa-list-ul" aria-hidden="true"></i>
+                                  </span>
+                                </a>
+                                <a class="level-item" aria-label="retweet">
+                                  <span class="icon is-small">
+                                    <i class="fas fa-plus" aria-hidden="true"></i>
+                                  </span>
+                                </a>
+                                <a class="level-item" aria-label="like">
+                                  <span class="icon is-small">
+                                    <i class="fas fa-trash has-text-danger" aria-hidden="true"></i>
+                                  </span>
+                                </a>
+                              </div>
+                            </nav>
+                          </div>
+                        </article>
+                      </div>
 
-                    <td>
-                        {% if value.returns > 0 %}
-                            <i class="bi bi-arrow-up-circle-fill" style="color:green"></i>
-                        {% else %}
-                            <i class="bi bi-arrow-down-circle-fill" style="color:red"></i>
-                        {% endif %}
-                        {{ value.returns|floatformat:2 }}
-                    </td>
-                </tr>
+                </div>
+                {% endfor %}
 
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+            </div>
 
-</div>
+        </div>
+</section>
+
 {% endblock %}
