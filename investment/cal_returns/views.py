@@ -50,7 +50,7 @@ def inv_return_test(request):
             symbol = symbol_temp
             start_date = form.cleaned_data['start_date']
             end_date = form.cleaned_data['end_date']
-            no_of_shares = 10 
+            no_of_shares = 1 
             multiply = 1.4 
             moving_average = 10 
             moving_average = int(form.cleaned_data['risk_ape'])
@@ -65,6 +65,7 @@ def inv_return_test(request):
             msg = f"{price_list[-1]} invested would have given {price1_list[-1]}"
             html = render_block_to_string('cal_returns/inv_return_test_par.html', 'inv-test-result',{'form': form,
                                                                                      'data': data,
+                                                                                     'symbol': symbol,
                                                                                      'xirr': xirr_value,
                                                                                      'inv_to_proceed': inv_to_proceed,
                                                                                      'total_inv': tot_inv,

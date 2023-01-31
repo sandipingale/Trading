@@ -11,7 +11,7 @@
         <div class="columns is-multiline is-centered is-mobile">
             {% if 'test_group' in request.session.groups %}
             <div class="column is-2-desktop is-8-mobile">
-                <div class="card">
+                <div class="card" hx-get="{% url 'inv_return_test' %}" hx-target="#container-id">
                     <header class="card-header has-background-link-light">
                         <p class="card-header-title">
                             Investment Test
@@ -23,7 +23,9 @@
                         </div>
                     </div>
                     <footer class="card-footer is-primary has-background-link-light is-justify-content-space-around">
-                        <a href="" class="is-size-4" hx-get="{% url 'inv_return_test' %}" hx-target="#container-id"><i class="fa-solid fa-arrow-trend-up"></i></a>
+                        <a href="" class="is-size-4" hx-get="{% url 'inv_return_test' %}" hx-target="#container-id">
+                            <i class="fa-regular fa-hand-point-right"></i>
+                        </a>
                     </footer>
                 </div>
             </div>

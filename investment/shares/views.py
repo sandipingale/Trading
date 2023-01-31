@@ -133,7 +133,8 @@ def add_shares(request):
 
             obj.save()
         else:
-            print(form)
+            pass
+            #print(form)
         return redirect('shares')
     else:
         form = SharesForm()
