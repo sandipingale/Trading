@@ -20,7 +20,7 @@ class Shares(models.Model):
     logo = models.CharField(max_length=150, null=True, blank=True)
 
 class ShareList(models.Model):
-    text = models.CharField(max_length=30)
+    text = models.CharField(max_length=80)
     name = models.CharField(max_length=50)
 
 

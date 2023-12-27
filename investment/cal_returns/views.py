@@ -187,6 +187,8 @@ def get_json_inv_test(request):
         symbol = symbol
     else:
         symbol = 'NIFTYBEES.NS'
+    symbolobj = ShareList.objects.filter(text=symbol)
+    symbol = symbolobj[0].name
 
     data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, 'EQ', start_date, end_date,
                                                                       10, 1.4, int(category))

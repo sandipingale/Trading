@@ -24,12 +24,12 @@ from registrations.decorators import allowed_user
 def load_shares(request):
     f = symbols.split('\n')
     for lines in f:
-        #print(lines)
-        is_exist = ShareList.objects.filter(text=f"{lines}.NS").exists()
+        t_name, t_text = lines.split(",")
+        is_exist = ShareList.objects.filter(text=f"{t_text}").exists()
         if not is_exist:
             obj = ShareList()
-            obj.text = f"{lines}.NS"
-            obj.name = f"{lines}.NS"
+            obj.text = f"{t_text}"
+            obj.name = f"{t_name}.NS"
             obj.save()
     return JsonResponse({'result':'Data loaded successfully'})
 
