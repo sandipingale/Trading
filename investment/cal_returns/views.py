@@ -11,6 +11,7 @@ from shares.models import ShareList
 from django.contrib.auth.decorators import login_required
 from registrations.decorators import allowed_user
 from render_block import render_block_to_string
+import json
 
 
 @login_required()
@@ -175,17 +176,37 @@ def sect_return(request):
         return render(request, 'cal_returns/sect_return.html', {'form': form})
 
 @login_required()
+@allowed_user(['shares_group'])
 def get_json_inv_test(request):
-    symbol = request.GET.get("symbol", None)
+    post_msg = json.loads(request.body.decode("utf-8"))
+    symbol = post_msg.get("symbol")
+    start_date = post_msg.get("start_date")
+    end_date = post_msg.get("end_date")
+    category = post_msg.get("category")
     if symbol:
         symbol = symbol
     else:
         symbol = 'NIFTYBEES.NS'
 
-    data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, 'EQ', '2019-01-01', '2021-08-10',
-                                                                      10, 1.4, 10)
+    data, xirr_value, inv_to_proceed, tot_inv, tot_ret = new_inv_test(symbol, 'EQ', start_date, end_date,
+                                                                      10, 1.4, int(category))
+    abs_ret = (tot_ret - tot_inv)/tot_inv * 100
+    date_list = [datetime(year=x[0].year, month=x[0].month, day=x[0].day).timestamp()*1000+86400000 for x in data]
+    price_list = [round(x[1],2) for x in data]
+    price_list[-1] = price_list[-2]
+    price1_list = [round(x[2],2) for x in data]
+    msg = f"{price_list[-1]} invested would have given {price1_list[-1]}"
     response = JsonResponse({'symbol':  symbol,
                              'xirr': xirr_value,
                              'inv_value': round(inv_to_proceed,2),
+                             'inv_to_proceed': round(inv_to_proceed,2),
+                            'total_inv': round(tot_inv,2),
+                            'total_ret': round(tot_ret,2),
+                            'abs_return': round(abs_ret,2),
+                            'date_list': date_list,
+                            'price_list': price_list,
+                            'price1_list': price1_list,
+                            'msg':msg,
                              'data': data})
     return response
+

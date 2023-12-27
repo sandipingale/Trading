@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 from django.contrib.messages import constants as messages
 import os
 import socket
+from dotenv import load_dotenv
+
+project_folder = os.path.expanduser('~')  # adjust as appropriate
+load_dotenv(os.path.join(project_folder, '.env'))
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -87,7 +92,8 @@ db_setting = None
 
 if os.environ.get('mysql_enabled', None):
     db_setting =  {
-    'ENGINE': 'django.db.backends.postgresql',
+    #'ENGINE': 'django.db.backends.postgresql',
+    'ENGINE': 'mysql.connector.django',
     'NAME': os.environ.get('mydbname'),
     'USER': os.environ.get('mydbuser'),
     'PASSWORD': os.environ.get('mydbpassword'),
@@ -155,6 +161,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'tradeandinvest.adm@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('gmail_password')
 
+
 # For bootstrap
 MESSAGE_TAGS = {
         messages.DEBUG: 'alert-secondary',
@@ -164,4 +171,4 @@ MESSAGE_TAGS = {
         messages.ERROR: 'alert-danger',
  }
 
-STATIC_ROOT = "/home/tiadmin/project/Trading/investment/static"
+STATIC_ROOT = "/home/tiadmin/tiproject/Trading/investment/static"

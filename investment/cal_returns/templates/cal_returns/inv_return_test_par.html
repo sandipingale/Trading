@@ -1,16 +1,11 @@
 {% load static %}
 {% block body_block %}
+
 <div class="container is-fluid">
-    <form action="inv_return_test" 
-          method="post" 
-          hx-post="{% url 'inv_return_test' %}" 
-          hx-target="#inv-test-result"
-          hx-indicator="#indicator"
-          hx-swap="outerHTML swap:1s">
+    <form>
         {% csrf_token %}
         <div class="columns is-mobile is-multiline is-centered">
-
-
+                    <!-- Start Date-->
                     <div class="column is-2-desktop is-6-mobile is-size-7">
                         <div class="field is-horizontal">
                             <div class="field-label is-normal">
@@ -25,6 +20,7 @@
                             </div>
                           </div>
                     </div>
+                    <!-- End Date-->
                     <div class="column is-2-desktop is-6-mobile is-size-7">
                         <div class="field is-horizontal">
                             <div class="field-label is-normal">
@@ -39,6 +35,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--Symbol-->
                     <div class="column is-2-desktop is-6-mobile is-size-7">
                       <div class="field is-horizontal">
                           <div class="field-label is-normal">
@@ -55,6 +52,7 @@
                           </div>
                         </div>
                     </div>
+                    <!-- Risk-->
                     <div class="column is-2-desktop is-6-mobile is-size-7">
                       <div class="field is-horizontal">
                           <div class="field-label is-normal">
@@ -63,90 +61,52 @@
                           <div class="field-body">
                             <div class="field">
                               <p class="control is-size-7">
-                                <div class="select">
-                                  {{ form.risk_ape }}
+                                <div class="select" >
+                                  <select id="id_risk_category">
+                                    <option value="10">Low</option>
+                                    <option value="20">Medium</option>
+                                    <option value="50">High</option>
+                                  </select>
                                 </div>
                               </p>
                             </div>
                           </div>
                         </div>
                     </div>
-                    <!--div class="form-group col-4 col-md-4 col-sm-4">
-                        <label for="id_symbol_name">Symbol</label>
-                        <select id="id_symbol_name" name="symbol_name" class="form-control" required >
-                            <option value="" selected="">---------------</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-4 col-md-4 col-sm-6">
-                        <label for="id_no_of_shares">Shares</label>
-                        {{ form.no_of_shares }}
-                    </div>
-                    <div class="form-group col-4 col-md-4 col-sm-6">
-                        <label for="multiply">Multiply</label>
-                        {{ form.multiply }}
-                    </div>
-                    <div class="form-group col-4 col-md-4 col-sm-6">
-                        <label for="moving_average">MA</label>
-                        {{ form.moving_average }}
-                    </div>
-                    <div class="form-group col-4 col-md-4 col-sm-4">
-                        <label for="start_date">Start Date</label>
-                        <input type="date" name="start_date" class="form-control" required="" id="id_start_date">
-                    </div>
-                    <div class="form-group col-4 col-md-4 col-sm-4">
-                        <label for="end_date">End Date</label>
-                        <input type="date" name="end_date" class="form-control" required="" id="id_end_date">
-                    </div-->
-
-
-
         </div>
+        <!--Submit Button-->
         <div class="has-text-centered">
-          <button type="submit" class="button is-small">
-              Submit&nbsp<img id="indicator" class="htmx-indicator" src="{% static 'home/svg-loaders/circles.svg' %}"/>
+          <button type="button" class="button is-small is-link" onclick="get_page_data()" id="id-submit">
+              Submit
           </button>
-      </div>
+        </div>
     </form>
     <br>
-</div>
-    <!--div class="row justify-content-center">
-        <div class="loader" align="center"></div>
-    </div-->
-    
-    
-        {% block inv-test-result %}
 
-        <div id="inv-test-result" class="inv-result">
-          {% if xirr %}
-          <div style="display: none" id="priceData" data-json="{{ price_list|safe }}"></div>
-          <div style="display: none" id="price1Data" data-json="{{ price1_list|safe }}"></div>
-          <div style="display: none" id="dateData" data-json="{{ date_list }}"></div>
+<div id="error-notification">
+</div>
+
+<div id="inv-test-result" class="inv-result">
+
        
      
         <nav class="level is-mobile is-hidden-desktop">
             <div class="level-item has-text-centered">
               <div>
                 <p class="heading is-size-7-mobile">Symbol</p>
-                <p class="title is-size-6-mobile">{{symbol}}</p>
+                <p class="title is-size-6-mobile class-symbol">{{symbol}}</p>
               </div>
             </div>
             <div class="level-item has-text-centered">
               <div>
                 <p class="heading is-size-7-mobile">Returns (XIRR)</p>
-                <p class="title is-size-6-mobile 
-                          {% if '-' in xirr %} 
-                          has-text-danger 
-                          {% else %} 
-                          has-text-success
-                          {% endif %}">
-                {{ xirr }}
-                </p>
+                <p class="title is-size-6-mobile class-xirr">{{ xirr }}</p>
               </div>
             </div>
             <div class="level-item has-text-centered">
               <div>
                 <p class="heading is-size-7-mobile">Next Investment Price</p>
-                <p class="title is-size-6-mobile">{{ inv_to_proceed|floatformat:2 }}</p>
+                <p class="title is-size-6-mobile class-inv_value">{{ inv_to_proceed|floatformat:2 }}</p>
               </div>
             </div>
         </nav>
@@ -155,262 +115,82 @@
             <div class="level-item has-text-centered">
               <div>
                 <p class="heading is-size-7-mobile">Next Investment Price</p>
-                <p class="title is-size-7-mobile">{{ inv_to_proceed|floatformat:2 }}</p>
+                <p class="title is-size-7-mobile class-inv_to_proceed">{{ inv_to_proceed|floatformat:2 }}</p>
               </div>
             </div>
             <div class="level-item has-text-centered">
               <div>
                 <p class="heading is-size-7-mobile">Returns (XIRR)</p>
-                <p class="title is-size-7-mobile 
-                          {% if '-' in xirr %} 
-                          has-text-danger 
-                          {% else %} 
-                          has-text-success
-                          {% endif %}">
-                {{ xirr }}
-                </p>
+                <p class="title is-size-7-mobile class-xirr">{{ xirr }}</p>
               </div>
             </div>
             <div class="level-item has-text-centered">
               <div>
                 <p class="heading is-size-7-mobile">Total Investment</p>
-                <p class="title is-size-7-mobile">{{ total_inv|floatformat:2 }}</p>
+                <p class="title is-size-7-mobile class-total_inv">{{ total_inv|floatformat:2 }}</p>
               </div>
             </div>
             <div class="level-item has-text-centered">
                 <div>
                     <p class="heading">Symbol</p>
-                    <p class="title is-size-7-mobile">{{ symbol }}</p>
+                    <p class="title is-size-7-mobile class-symbol">{{ symbol }}</p>
                 </div>
                 </div>
             <div class="level-item has-text-centered">
               <div>
                 <p class="heading">Total Returns</p>
-                <p class="title is-size-7-mobile
-                          {% if total_inv < total_ret %} 
-                          has-text-success 
-                          {% else %} 
-                          has-text-danger 
-                          {% endif %}">
-                          {{ total_ret|floatformat:2 }}
-                </p>
+                <p class="title is-size-7-mobile class-total_ret">{{ total_ret|floatformat:2 }}</p>
               </div>
             </div>
             <div class="level-item has-text-centered">
                 <div >
                   <p class="heading is-size-7-mobile">Absolute Returns</p>
-                  <p class="title is-size-7-mobile 
-                            {% if abs_return > 0 %} 
-                            has-text-success 
-                            {% else %} 
-                            has-text-danger 
-                            {% endif %}">
-                            {{ abs_return|floatformat:2 }}%
-                    </p>
+                  <p class="title is-size-7-mobile class-abs_return"> {{ abs_return|floatformat:2 }}%</p>
                 </div>
               </div>
         </nav>
 
-
-            <!--div class="row justify-content-center">
-                <div class="card text-white bg-success mb-3 " style="max-width: 18rem;">
-                    <div class="card-header" id="id-card-header" >Investment Details and Returns</div>
-                    <div class="card-body">
-                        <div class="alert alert-primary" role="alert">
-                            Investment Price - {{ inv_to_proceed|floatformat:2 }}
-                        </div>
-                        <div class="alert alert-primary" role="alert">
-                            Returns (XIRR) - {{ xirr }}
-                        </div>
-                        <div class="alert alert-primary" role="alert">
-                            Total Investment  - {{ total_inv|floatformat:2 }}
-                        </div>
-                        <div class="alert alert-primary" role="alert">
-                            Total Returns  - {{ total_ret|floatformat:2 }}
-                        </div>
-                        <div class="alert alert-primary" role="alert">
-                            Abs Returns  - {{ abs_return|floatformat:2 }}
-                        </div>
-                    </div>
-                </div>
-            </div-->
-
-        {% endif %}
         <br>
-        {% if msg %}
+
         <div class="columns has-text-centered">
           <div class="column ">
-            <p class="title is-size-5-mobile 
-                          {% if '-' in xirr %} 
-                          has-text-danger 
-                          {% else %} 
-                          has-text-success
-                          {% endif %}">
-        {{msg}}
-        </p>
+            <p class="title is-size-5-mobile" id="id-message">{{msg}}</p>
         </div>
         </div>
-        {% endif %}
+
         <br>
           <div class="columns">
             <div class="column">
               <div id="chart"></div>
             </div>
             <div class="column">
-              {% if data %}
+
               <div class="table-responsive-sm">
                   <table class="table table-striped table-bordered table-sm" style="width:100%" id="example">
                       <thead>
                           <tr>
                               <th>Investment Date</th>
-                              <!--th>Close Price</th>
-                              <th>Moving Average</th-->
                               <th>Invested Amount</th>
-                              <!--th>Investment</th-->
                           </tr>
                       </thead>
-                      <tbody>
+                      <tbody id="id-table-body">
                           {% for date,price,ma,shares,investment in data %}
                           <tr>
                               <td>{{ date|date:'Y-m-d' }}</td>
-                              <!--td>{{ price|floatformat:2 }}</td>
-                              <td>{{ ma|floatformat:2 }}</td-->
                               <td>{{ shares|floatformat:2 }}</td>
-                              <!--td>{{ investment|floatformat:2 }}</td-->
                           </tr>
                           {% endfor %}
                       </tbody>
                   </table>
               </div>
-              {% endif %}
+
             </div>
           </div>
-        </div>
-        {% endblock %}
-    
-    
 </div>
-
+</div>
 
 {% endblock %}
 
 {% block script_block %}
-<script>
-
-function loadJson(selector) {
-  return JSON.parse(document.querySelector(selector).getAttribute('data-json'));
-}
-var data = [
-    {
-        id: 0,
-        text: 'SBIN.NS'
-    },
-    {
-        id: 1,
-        text: 'TCS.NS'
-    },
-    {
-        id: 2,
-        text: 'INFY.NS'
-    },
-    {
-        id: 3,
-        text: 'MARUTI.NS'
-    },
-    {
-        id: 4,
-        text: 'TATAMOTORS.NS'
-    }
-];
-$(document).ready(function() {
-$('#id_symbol_name').select2({
-//data:data
-ajax: {
-    url: "{% url 'get_share_list' %}",
-    dataType: 'json',
-    delay: 250,
-    data: function (params) {
-      return {
-        q: params.term, // search term
-        page: params.page
-      };
-    },
-    processResults: function (data, params) {
-    //console.log(data);
-    return {
-        results: data.results,
-        pagination: {
-          more: (params.page * 30) < data.total_count
-        }
-      };
-    },
-    cache: true,
-    minimumInputLength: 2,
-
-    // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
-  },
-  minimumInputLength: 2,
-});
-});
-
-
-function draw_chart(){
-// For graph
-//console.log(document.querySelector('#priceData'))
-if (!document.querySelector('#priceData')){
-  return;
-}
-//console.log(typeof(loadJson('#priceData')))
-  var options = {
-    chart: {
-      type: 'line'
-    },
-    series: [{
-      name: 'Investment',
-      //data: [30,40,35,50,49,60,70,91,125]
-      data: loadJson('#priceData')
-    },
-    {
-      name: 'Returns',
-      //data: [30,40,35,50,49,60,70,91,125]
-      data: loadJson('#price1Data')
-    }],
-    xaxis: {
-      //categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
-      categories: loadJson('#dateData'),
-      type: 'datetime',
-
-    },
-    stroke:{
-      width:1.5
-    },
-    tooltip:{
-      x:{
-        format: "dd MMM yyyy"
-      }
-    }
-  }
-
-  //console.log(document.querySelector("#chart"))
-  var chart = new ApexCharts(document.querySelector("#chart"), options);
-
-  chart.render()
-}
-//draw_chart()
-document.body.addEventListener('htmx:afterSettle', function(evt) {
-  //console.log("I am calling the function")
-  draw_chart(); // add a new parameter into the mix
-  $('#example').DataTable( {
-        dom: 'Blfrtip',
-        buttons: [
-            'copy' //, 'csv', 'excel', 'pdf', 'print'
-       ]
-    } );
-});
-
-
-    document.getElementById("id_start_date").value = "2019-01-01";
-    document.getElementById("id_end_date").value = new Date().toISOString().substr(0, 10);
-
-</script>
+<script type="text/javascript" src="{% static 'cal_returns/calc_return.js' %}"></script>
 {% endblock %}
